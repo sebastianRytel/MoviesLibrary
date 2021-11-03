@@ -1,0 +1,20 @@
+{% extends 'movies/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="media content-section">
+        <form method="GET">
+            {{ filter.form|crispy}}
+        <button class="btn btn-outline-info" type="submit">Search</button>
+        </form>
+    </div>
+    {% for movie in filter.qs %}
+        <article class="media content-section">
+            <img src={{ movie.Poster }}; width="100" height="auto">
+            <h2><a class="article-title" href="{% url 'movie-detail' movie.slug %}">{{ movie.Title }}</a></h2>
+            <br>
+            <h3>{{ movie.Year }}</h3>
+            <br>
+            <h3>rating - {{ movie.Rating }}</h3>
+        </article>
+    {% endfor %}
+{% endblock %}

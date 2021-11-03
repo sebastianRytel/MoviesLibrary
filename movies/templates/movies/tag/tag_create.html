@@ -1,0 +1,16 @@
+{% extends 'movies/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+    {% if update %}
+        <h2>{{ tag|title }}</h2>
+    {% endif %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form|crispy}}
+            <button class="btn btn-outline-info" type="submit">
+                {% if update %}Update {% else %}Create{% endif %}
+            </button>
+        </form>
+    </div>
+{% endblock %}

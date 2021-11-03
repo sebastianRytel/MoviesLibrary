@@ -1,0 +1,15 @@
+{% extends 'movies/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+        <form action="." method="POST">
+                {% csrf_token %}
+                {{ form | crispy}}
+            <div class="form-group">
+                <button class="btn btn-outline-info"
+                        type="submit">
+                    Save in Database</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}

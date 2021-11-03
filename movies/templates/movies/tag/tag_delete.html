@@ -1,0 +1,20 @@
+{% extends 'movies/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+    <p>
+      Are you sure you want to delete tag {{ movietag.tag }}?
+    </p>
+    <button type="button"
+            class="btn btn-outline-info"
+            onclick="location.href='{{ movietag.get_absolute_url }}'">
+            Cancel</button>
+    <form
+      action="."
+      method="post">
+    {% csrf_token %}
+    <button type="submit"
+            class="btn btn-outline-info">
+            Delete Tag</button>
+  </form>
+{% endblock %}

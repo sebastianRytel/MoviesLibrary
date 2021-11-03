@@ -1,0 +1,45 @@
+{% extends 'movies/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+    <div class="content-section">
+        <div class="row">
+            <div class="col-sm">
+                <h1>Tag List:</h1>
+            </div>
+            <div class="col-sm">
+                <button name="delete"
+                        type="submit"
+                        onclick="location.href='{% url "tag-create" %}'"
+                        class="btn btn-outline-info">
+                        Add new Tag </button>
+            </div>
+        </div>
+    </div>
+    {% for tag in tags %}
+        <div class="content-section">
+            <div class="row">
+                <div class="col-sm">
+                    <h2>{{tag.tag|title}}</h2>
+                </div>
+                <div class="col-sm">
+                <button name="update"
+                        type="button"
+                        onclick="location.href='{{ tag.get_update_url }}'"
+                        class="btn btn-outline-info">
+                        Change Tag Name</button>
+                </div>
+                <div class="col-sm">
+                    <button name="delete"
+                            type="submit"
+                            onclick="location.href='{{ tag.get_delete_url }}'"
+                            class="btn btn-outline-info">
+                            Delete </button>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <li><em>There are currently no Tags available.</em></li>
+    {% endfor %}
+</div>
+{% endblock %}

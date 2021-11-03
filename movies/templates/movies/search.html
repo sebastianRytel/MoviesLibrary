@@ -1,0 +1,51 @@
+{% extends 'movies/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+        {% csrf_token %}
+            <label>
+                <input class="search" type="text" name="search_all" placeholder="Search for a Movie">
+            </label>
+            <input class='btn btn-outline-info' type="submit" value="Search all">
+            <br>
+            <label>
+                <input class="search" type="text" name="search_exact" placeholder="Search for a Movie">
+            </label>
+            <input class='btn btn-outline-info' type="submit" value="Search exact">
+            <br>
+            <label>
+                <input class="search" type="text" name="search_by_id" placeholder="Search for a Movie ID">
+            </label>
+            <input class='btn btn-outline-info' type="submit" value="Search id">
+        </form>
+    </div>
+{% if movies %}
+    {% if movies.Response == 'False' %}
+        <h1>{{ movies.Error }}</h1>
+    {% else %}
+        {% for movie in movies %}
+            <article class="media content-section">
+                <img class="rounded-circle article-img" src="{{ user.profile.image.url }}">
+                <div class="media-body">
+                    <div class="article-metadata">
+                        <h2>{{ movie.Title }} - {{ movie.Year }}</h2>
+                        <h3>rating - {{ movie.imdbRating }}</h3>
+                        <small class="text-muted"> IMDB Link: <a href="https://www.imdb.com/title/{{ movie.imdbID }}">
+                            {{ movie.imdbID }}</a></small>
+                    </div>
+                    <img src="{{ movie.Poster }}">
+                    <p class="article-content">{{ movie.Plot }}</p>
+                    <form action="{% url 'movies-form' %}" method="POST">
+                    {% csrf_token %}
+                        <button name="open movie details"
+                                type="submit"
+                                value="{{ movie }}"
+                        >Edit movie details</button>
+                    </form>
+                </div>
+            </article>
+        {% endfor %}
+    {% endif %}
+{% endif %}
+{% endblock %}
