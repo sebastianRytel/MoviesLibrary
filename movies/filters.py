@@ -10,4 +10,5 @@ class MovieFilter(django_filters.FilterSet):
             'Year': ['exact'],
             'movie_tag': ['exact'],
             'Rating': ['exact'],
+            'watched': ['exact'],
         }

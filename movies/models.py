@@ -2,6 +2,8 @@ from django.db import models
 from django.urls import reverse
 from django_extensions.db.fields import AutoSlugField
 from django.template.defaultfilters import slugify
+from django.utils.safestring import mark_safe
+from django.conf import settings
 
 class MovieTag(models.Model):
     tag = models.CharField(max_length=100, unique=True)
@@ -37,15 +39,29 @@ class MovieTag(models.Model):
 
 class Movies(models.Model):
 
-    class Rank(models.IntegerChoices):
-        VERY_GOOD = 5,
-        GOOD = 4,
-        AVERAGE = 3,
-        POOR = 2,
-        BAD = 1,
-        PIECE_OF_SHIT = 0,
+    RANKING_CHOICES = (
+        (5, mark_safe('<img src="https://img.icons8.com/ios/50/000000/netflix--v1.png"/>')),
+        (4, 'Good'),
+        (3, 'Average'),
+        (2, 'Poor'),
+        (1, 'Bad'),
+        (0, 'Piece of shit'),
+    )
 
-    WhereToWatch = models.TextChoices('WhereToWatch', 'Harddrive CDA Netflix')
+    # class Rank(models.IntegerChoices):
+    #     VERY_GOOD = 5,
+    #     GOOD = 4,
+    #     AVERAGE = 3,
+    #     POOR = 2,
+    #     BAD = 1,
+    #     PIECE_OF_SHIT = 0,
+
+    # WhereToWatch = models.TextChoices('WhereToWatch', 'Harddrive CDA Netflix')
+    WHERE_TO_WATCH = (
+        ('HARD DRIVE', 'harddrive'),
+        ('CDA', 'cda'),
+        ('NETFLIX', mark_safe('<img src="https://img.icons8.com/ios/50/000000/netflix--v1.png"/>'))
+    )
 
     Title = models.CharField(max_length=100)
     Year = models.IntegerField()
@@ -59,11 +75,12 @@ class Movies(models.Model):
     imdbRating = models.CharField(max_length=4, blank=True)
     Metascore = models.CharField(max_length=4, blank=True)
     imdbID = models.CharField(max_length=10, blank=True)
-    Rating = models.IntegerField(choices=Rank.choices, default='')
-    Location = models.CharField(max_length=10,choices=WhereToWatch.choices, default='')
+    Rating = models.IntegerField(choices=RANKING_CHOICES, default='')
+    Location = models.CharField(max_length=10,choices=WHERE_TO_WATCH, default='')
     movieURL = models.URLField(max_length=40, blank=True)
     movie_tag = models.ManyToManyField(MovieTag)
     slug = models.SlugField(max_length=50, blank=True)
+    watched = models.BooleanField(default=True)
 
     class Meta:
         unique_together = ("Title", "Year", "slug")
