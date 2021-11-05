@@ -49,7 +49,7 @@ class Movies(models.Model):
     )
 
     # class Rank(models.IntegerChoices):
-    #     VERY_GOOD = 5,
+    #     VERY_GOOD = 5,ą
     #     GOOD = 4,
     #     AVERAGE = 3,
     #     POOR = 2,

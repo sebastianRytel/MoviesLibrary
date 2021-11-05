@@ -86,3 +86,7 @@ a.article-title:hover {
 .row {
   justify-content: center;
 }
+
+.form-check {
+  display: inline-block;
+}
