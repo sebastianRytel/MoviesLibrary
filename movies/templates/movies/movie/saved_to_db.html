@@ -1,0 +1,17 @@
+{% extends 'movies/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+        <h2> Movie ->{{ title }}<- is added to Movies Library</h2>
+        <p></p>
+        {% if new_tags %}
+            <h2>Following tags:</h2>
+                {% for tag in new_tags %}
+                    <li class="list">{{ tag }}</li>
+                {% endfor %}
+            <h2>is added to Tag Library</h2>
+        {% else %}
+        <h3>There are no new tags to be added</h3>
+        {% endif %}
+    </div>
+{% endblock %}

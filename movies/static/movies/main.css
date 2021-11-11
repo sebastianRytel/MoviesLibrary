@@ -1,23 +1,54 @@
 body {
-  background: #fafafa;
-  color: #333333;
+  background-image: url("/media/background.jpg");
+  background-repeat: repeat;
+  background-position: center center;
+  background-size: cover;
+
+  background-origin: border-box;
   margin-top: 5rem;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #444444;
+  color: lightgray;
+  font-family: sans-serif;
+
+}
+
+h5 {
+  padding-top: 5px;
 }
 
 ul {
   margin: 0;
 }
 
-.bg-steel {
-  background-color: #5f788a;
+label {
+  font-size: 18px;
+  font-weight: normal;
+  font-family: sans-serif;
+  color: lightgray;
+}
+
+img {
+  border-radius: 10px
+}
+
+li.list {
+  color:lightgray;
+  font-size: 20px;
+}
+
+.tags {
+  color:lightgray;
+  font-size: 15px;
 }
 
 .site-header .navbar-nav .nav-link {
   color: #cbd5db;
+}
+
+.row{
+  justify-content: center;
 }
 
 .site-header .navbar-nav .nav-link:hover {
@@ -29,23 +60,24 @@ ul {
 }
 
 .content-section {
-  background: #ffffff;
+
   padding: 10px 20px;
-  border: 1px solid #dddddd;
-  border-radius: 3px;
-  margin-bottom: 20px;
+  border: 1px solid darkgrey;
+  border-radius: 10px;
+  margin-bottom: 10px;
 }
 
-.article-title {
-  color: #444444;
-}
-
-a.article-title:hover {
+a.movie-title:hover {
   color: #428bca;
   text-decoration: none;
 }
 
+a.movie-title{
+  color: darkgrey;
+}
+
 .article-content {
+  color: darkgrey;
   white-space: pre-line;
 }
 
@@ -61,17 +93,6 @@ a.article-title:hover {
   border-bottom: 1px solid #e3e3e3
 }
 
-.article-metadata a:hover {
-  color: #333;
-  text-decoration: none;
-}
-
-.article-svg {
-  width: 25px;
-  height: 25px;
-  vertical-align: middle;
-}
-
 .account-img {
   height: 125px;
   width: 125px;
@@ -83,10 +104,51 @@ a.article-title:hover {
   font-size: 2.5rem;
 }
 
-.row {
-  justify-content: center;
-}
-
 .form-check {
   display: inline-block;
 }
+
+.column-right{
+  border-left: 3px solid;
+  border-color: darkgrey;
+  padding-left: 15px !important;
+}
+
+.column-left{
+  padding-right: 15px !important;
+}
+
+.column-right-row {
+  border-bottom: 3px solid;
+  border-color: darkgrey;
+  align-items: center;
+}
+
+.button-save-form{
+  background-color: red;
+}
+
+.btn-danger{
+  background-image:linear-gradient(to right, darkred, red);
+}
+
+.btn-success {
+  background-image:linear-gradient(to right, darkgreen, green);
+}
+
+.library-button {
+  margin-top: 10px;
+  width: 130px;
+}
+
+.col-sm {
+  display: block;
+  margin-top: auto;
+  margin-bottom: auto
+}
+
+
+.custom-radio {
+  padding-bottom: 5px;
+}
+

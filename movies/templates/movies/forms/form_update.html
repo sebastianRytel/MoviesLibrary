@@ -1,0 +1,10 @@
+{% extends 'movies/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            {% crispy form form.helper %}
+        </form>
+    </div>
+{% endblock %}

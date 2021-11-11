@@ -4,14 +4,14 @@
 <div class="container">
     <div class="content-section">
         <div class="row">
-            <div class="col-sm">
+            <div class="col-4">
                 <h1>Tag List:</h1>
             </div>
-            <div class="col-sm">
-                <button name="delete"
+            <div class="col-8">
+                <button name="new"
                         type="submit"
                         onclick="location.href='{% url "tag-create" %}'"
-                        class="btn btn-outline-info">
+                        class="btn btn-success">
                         Add new Tag </button>
             </div>
         </div>
@@ -19,27 +19,31 @@
     {% for tag in tags %}
         <div class="content-section">
             <div class="row">
-                <div class="col-sm">
+                <div class="col-4">
                     <h2>{{tag.tag|title}}</h2>
                 </div>
-                <div class="col-sm">
+                <div class="col-4" style="display: block;
+                                            margin-top: auto;
+                                            margin-bottom: auto">
                 <button name="update"
                         type="button"
                         onclick="location.href='{{ tag.get_update_url }}'"
-                        class="btn btn-outline-info">
-                        Change Tag Name</button>
+                        class="btn btn-success">
+                        Update Tag</button>
                 </div>
-                <div class="col-sm">
+                <div class="col-4" style="display: block;
+                                            margin-top: auto;
+                                            margin-bottom: auto">
                     <button name="delete"
                             type="submit"
                             onclick="location.href='{{ tag.get_delete_url }}'"
-                            class="btn btn-outline-info">
-                            Delete </button>
+                            class="btn btn-danger">
+                            Delete Tag</button>
                 </div>
             </div>
         </div>
     {% empty %}
-        <li><em>There are currently no Tags available.</em></li>
+        <li class="list">There are currently no Tags available.</li>
     {% endfor %}
 </div>
 {% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'movies/base.html' %}
+{% load crispy_forms_tags %}
+{% block sidebar %}
+<div class="col-md-4">
+    <div class="media content-section">
+        <form method="GET">
+            {{ filter.form|crispy}}
+        <button class="btn btn-danger" type="submit">Search</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+{% block content %}
+{% for movie in filter.qs %}
+    <article class="media content-section">
+    <div class="col-3 library-poster">
+        <img src={{ movie.Poster }}; width="100" height="auto">
+    </div>
+    <div class="col-6">
+        <h2><a class="movie-title" href="{% url 'movie-detail' movie.slug %}">{{ movie.Title }}</a></h2>
+        <h4>{{ movie.Year }}</h4>
+        {% if movie.Rating == 5 %}
+            <img src="/media/rating_icos/rating_5_ico.jpg">
+        {% elif movie.Rating == 4 %}
+            <img src="/media/rating_icos/rating_4_ico.jpg">
+        {% elif movie.Rating == 3 %}
+            <img src="/media/rating_icos/rating_3_ico.jpg">
+        {% elif movie.Rating == 2 %}
+            <img src="/media/rating_icos/rating_2_ico.jpg">
+        {% elif movie.Rating == 1 %}
+            <img src="/media/rating_icos/rating_1_ico.jpg">
+        {% elif movie.Rating == 0 %}
+            <img src="/media/rating_icos/rating_0_ico.jpg">
+        {% endif %}
+    </div>
+    <div class="col-4" style="justify-content: center">
+        {% if movie.watched is True %}
+            <h4>Watched</h4>
+        {% else %}
+            <h4 style="color:red">To be watched</h4>
+        {% endif %}
+        <button name="delete"
+            type="submit"
+            onclick="location.href='{{ movie.get_delete_url }}'"
+            class="btn btn-danger library-button">
+            Delete Movie</button>
+        <button name="update"
+                type="button"
+                class="btn btn-success library-button"
+                onclick="location.href='{{ movie.get_update_url }}'">
+                Update Movie</button>
+    </div>
+    </article>
+{% endfor %}
+{% endblock %}

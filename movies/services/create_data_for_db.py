@@ -1,6 +1,6 @@
 import ast
 
-from movies.models import Movies
+from movies.db.models import Movies
 
 def create_data(data_from_search):
     dict_with_movie_details = {}

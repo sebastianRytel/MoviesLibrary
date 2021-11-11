@@ -37,4 +37,6 @@ def search_all(movie_title):
 
 def search_exact(movie_title):
     searched_movies_all = search_for_movie_by_title(movie_title)
+    if 'Response' in searched_movies_all:
+        return searched_movies_all
     return [movie for movie in searched_movies_all if movie['Title'] == movie_title]

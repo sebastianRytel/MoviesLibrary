@@ -5,28 +5,28 @@
         <form method="POST">
         {% csrf_token %}
             <label>
-                <input class="search" type="text" name="search_all" placeholder="Search for a Movie">
+                <input class="search" type="text" name="search_all" placeholder="Search all Titles">
             </label>
-            <input class='btn btn-outline-info' type="submit" value="Search all">
+            <input class='btn btn-danger' type="submit" value="Search">
             <br>
             <label>
-                <input class="search" type="text" name="search_exact" placeholder="Search for a Movie">
+                <input class="search" type="text" name="search_exact" placeholder="Search exact Title">
             </label>
-            <input class='btn btn-outline-info' type="submit" value="Search exact">
+            <input class='btn btn-danger' type="submit" value="Search">
             <br>
             <label>
-                <input class="search" type="text" name="search_by_id" placeholder="Search for a Movie ID">
+                <input class="search" type="text" name="search_by_id" placeholder="Search by ImdbID">
             </label>
-            <input class='btn btn-outline-info' type="submit" value="Search id">
+            <input class='btn btn-danger' type="submit" value="Search">
         </form>
     </div>
 {% if movies %}
     {% if movies.Response == 'False' %}
-        <h1>{{ movies.Error }}</h1>
+        <h1 style="text-align: center">{{ movies.Error }}</h1>
+        <h3 style="text-align: center"><a class="movie-title" href="https://www.imdb.com/">Try to use IMDB browser</a></h3>
     {% else %}
         {% for movie in movies %}
             <article class="media content-section">
-                <img class="rounded-circle article-img" src="{{ user.profile.image.url }}">
                 <div class="media-body">
                     <div class="article-metadata">
                         <h2>{{ movie.Title }} - {{ movie.Year }}</h2>
@@ -38,7 +38,8 @@
                     <p class="article-content">{{ movie.Plot }}</p>
                     <form action="{% url 'movies-form' %}" method="POST">
                     {% csrf_token %}
-                        <button name="open movie details"
+                        <button class="btn btn-danger"
+                                name="open movie details"
                                 type="submit"
                                 value="{{ movie }}"
                         >Edit movie details</button>
