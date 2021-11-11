@@ -1,0 +1,25 @@
+{% extends 'movies/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="content-section">
+        <h2 style="text-align: center">Are you sure you want to delete movie</h2>
+        <h2 style="text-align: center">-> {{ movies.Title }} <-</h2>
+    <br>
+    <div class="row border-top pt-3">
+        <div class="col" style="text-align: center">
+        <button type="button"
+                class="btn btn-danger"
+                onclick="location.href='{% url 'movies-library' %}'">
+                Cancel</button>
+        </div>
+        <div class="col" style="text-align: center">
+            <form method="post">
+            {% csrf_token %}
+            <button type="submit"
+                    class="btn btn-danger">
+                    Delete Movie</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
