@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from movies.services.create_data_for_db import create_data
 from movies.services.searcher import search_all, search_exact, search_by_id
 from movies.services.new_tag_from_search import create_new_tag
-from movies.db.form import MoviesForm, MovieTagForm
+from movies.db.form import MoviesForm, MovieTagForm, LocationForm, UserCommitForm
 from movies.db.models import Movies, MovieTag
 from movies.db.filters import MovieFilter
 
@@ -31,7 +31,9 @@ def search(request):
 def save_to_library(request):
     if request.method == 'POST':
         movies = MoviesForm(request.POST)
-        if movies.is_valid():
+        user_commit = UserCommitForm(request.POST)
+        movie_locations = LocationForm(request.POST)
+        if movies.is_valid() and user_commit.is_valid() and movie_locations.is_valid():
             new_tags = create_new_tag(movies.cleaned_data)
             movie_title = movies.cleaned_data['Title']
             movies.save()

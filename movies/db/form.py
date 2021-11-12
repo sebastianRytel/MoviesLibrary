@@ -4,7 +4,7 @@ from django import forms
 from django.forms import ModelForm
 
 
-from movies.db.models import Movies, MovieTag
+from movies.db.models import Movies, MovieTag, MovieLocation
 
 
 class MoviesForm(ModelForm):
@@ -68,12 +68,23 @@ class MoviesForm(ModelForm):
                     Column('Location', css_class='column-right-row'),
                     Column('watched', css_class='column-right-row'),
                 css_class='form-group col-md-4 mb-0 column-right'),
+
                 ),
 
             ButtonHolder(
                 Submit('Save in Library', 'Save', css_class='btn btn-danger'),
                 ),
         )
+
+class UserCommitForm(ModelForm):
+    class Meta:
+        model = Movies
+        fields = ['Rating', 'movie_tag', 'Location', 'watched']
+
+class LocationForm(ModelForm):
+    class Meta:
+        model = MovieLocation
+        fields = '__all__'
 
 class MovieTagForm(ModelForm):
     class Meta:

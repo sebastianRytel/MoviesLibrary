@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import TextField
 from django.urls import reverse
 from django_extensions.db.fields import AutoSlugField
 from django.template.defaultfilters import slugify
@@ -19,11 +20,11 @@ class MovieTag(models.Model):
     def __str__(self):
         return self.tag
 
+
     def get_absolute_url(self):
         return reverse(
             "tags-list",
         )
-
 
     def get_update_url(self):
         return reverse(
@@ -35,6 +36,14 @@ class MovieTag(models.Model):
         return reverse(
             "tag-delete", kwargs={"slug": self.slug}
         )
+
+
+class MovieLocation(models.Model):
+    CDA = models.CharField(max_length=50, blank=True)
+    Netflix = models.CharField(max_length=50, blank=True)
+    HboGO = models.CharField(max_length=50, blank=True)
+    AmazonPrime = models.CharField(max_length=50, blank=True)
+    HardDrive = models.CharField(max_length=50, blank=True)
 
 
 class Movies(models.Model):
@@ -73,6 +82,8 @@ class Movies(models.Model):
     Rating = models.IntegerField(choices=RANKING_CHOICES, default='')
     Location = models.CharField(max_length=10, choices=WHERE_TO_WATCH, default='')
     watched = models.BooleanField(default=True)
+    movie_location = models.ManyToManyField(MovieLocation)
+
 
     class Meta:
         unique_together = ("Title", "Year")
