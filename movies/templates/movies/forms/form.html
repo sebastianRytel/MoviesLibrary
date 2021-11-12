@@ -4,7 +4,9 @@
     <div class="content-section">
         <form action="{% url 'movies-save' %}" method="POST">
             {% csrf_token %}
-            {% crispy form form.helper %}
+            {{ movies_form|crispy }}
+            {{ movie_locations_form|crispy }}
+            <button type="submit">Button</button>
         </form>
     </div>
 {% endblock %}

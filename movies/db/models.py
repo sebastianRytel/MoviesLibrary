@@ -20,7 +20,6 @@ class MovieTag(models.Model):
     def __str__(self):
         return self.tag
 
-
     def get_absolute_url(self):
         return reverse(
             "tags-list",
@@ -48,19 +47,35 @@ class MovieLocation(models.Model):
 
 class Movies(models.Model):
 
+    # RANKING_CHOICES = (
+    #     (5, mark_safe('<img src="/media/rating_icos/rating_5_ico.jpg">')),
+    #     (4, mark_safe('<img src="/media/rating_icos/rating_4_ico.jpg">')),
+    #     (3, mark_safe('<img src="/media/rating_icos/rating_3_ico.jpg">')),
+    #     (2, mark_safe('<img src="/media/rating_icos/rating_2_ico.jpg">')),
+    #     (1, mark_safe('<img src="/media/rating_icos/rating_1_ico.jpg">')),
+    #     (0, mark_safe('<img src="/media/rating_icos/rating_0_ico.jpg">')),
+    # )
+
     RANKING_CHOICES = (
-        (5, mark_safe('<img src="/media/rating_icos/rating_5_ico.jpg">')),
-        (4, mark_safe('<img src="/media/rating_icos/rating_4_ico.jpg">')),
-        (3, mark_safe('<img src="/media/rating_icos/rating_3_ico.jpg">')),
-        (2, mark_safe('<img src="/media/rating_icos/rating_2_ico.jpg">')),
-        (1, mark_safe('<img src="/media/rating_icos/rating_1_ico.jpg">')),
-        (0, mark_safe('<img src="/media/rating_icos/rating_0_ico.jpg">')),
+        (5, '5'),
+        (4, '4'),
+        (3, '3'),
+        (2, '2'),
+        (1, '1'),
+        (0, '0'),
     )
 
+
+    # WHERE_TO_WATCH = (
+    #     ('HARD DRIVE', mark_safe('<img src="/media/local_icos/hdd_ico.jpg">')),
+    #     ('CDA', mark_safe('<img src="/media/local_icos/cda_ico.jpg">')),
+    #     ('NETFLIX', mark_safe('<img src="/media/local_icos/flix_ico.jpg">'))
+    # )
+
     WHERE_TO_WATCH = (
-        ('HARD DRIVE', mark_safe('<img src="/media/local_icos/hdd_ico.jpg">')),
-        ('CDA', mark_safe('<img src="/media/local_icos/cda_ico.jpg">')),
-        ('NETFLIX', mark_safe('<img src="/media/local_icos/flix_ico.jpg">'))
+        ('HARD DRIVE', 'HARD DRIVE'),
+        ('CDA', 'CDA'),
+        ('NETFLIX', 'NETFLIX')
     )
 
     Title = models.CharField(max_length=100)
@@ -79,11 +94,10 @@ class Movies(models.Model):
     slug = models.SlugField(max_length=50, blank=True)
     movieURL = models.URLField(max_length=40, blank=True)
     movie_tag = models.ManyToManyField(MovieTag)
-    Rating = models.IntegerField(choices=RANKING_CHOICES, default='')
+    Rating = models.IntegerField(choices=RANKING_CHOICES, default=0)
     Location = models.CharField(max_length=10, choices=WHERE_TO_WATCH, default='')
     watched = models.BooleanField(default=True)
-    movie_location = models.ManyToManyField(MovieLocation)
-
+    movie_location = models.ForeignKey(MovieLocation, on_delete=models.PROTECT)
 
     class Meta:
         unique_together = ("Title", "Year")
@@ -109,3 +123,4 @@ class Movies(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.Title+str(self.Year))
         super(Movies, self).save(*args, **kwargs)
+

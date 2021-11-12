@@ -7,7 +7,7 @@ from movies.services.create_data_for_db import create_data
 from movies.services.searcher import search_all, search_exact, search_by_id
 from movies.services.new_tag_from_search import create_new_tag
 from movies.db.form import MoviesForm, MovieTagForm, LocationForm, UserCommitForm
-from movies.db.models import Movies, MovieTag
+from movies.db.models import Movies, MovieTag, MovieLocation
 from movies.db.filters import MovieFilter
 
 
@@ -31,15 +31,22 @@ def search(request):
 def save_to_library(request):
     if request.method == 'POST':
         movies = MoviesForm(request.POST)
-        user_commit = UserCommitForm(request.POST)
         movie_locations = LocationForm(request.POST)
-        if movies.is_valid() and user_commit.is_valid() and movie_locations.is_valid():
+        context = {
+            'movies_form': movies,
+
+            'movie_locations_form': movie_locations,
+        }
+        if movies.is_valid() and movie_locations.is_valid():
             new_tags = create_new_tag(movies.cleaned_data)
             movie_title = movies.cleaned_data['Title']
-            movies.save()
+            movie_locations = MovieLocation.objects.create(**movie_locations.cleaned_data)
+            movie_locations.save()
+            movie = Movies.objects.create(**movies.cleaned_data, movie_location=movie_locations)
+            movie.save()
             return render(request, 'movies/movie/saved_to_db.html', {'title': movie_title, 'new_tags': new_tags})
         # returns form with validation errors, if fields are not valid as per fields definition in models.
-        return render(request, 'movies/forms/form.html', {'form': movies})
+        return render(request, 'movies/forms/form.html', context)
 
 
 class MovieCreateEmpty(CreateView):
@@ -60,8 +67,11 @@ class MovieCreate(CreateView):
     def post(self, request, *args, **kwargs):
         movie_details = request.POST.get('open movie details')
         processed_data = create_data(movie_details)
-        movies = MoviesForm(initial=processed_data)
-        return render(request, 'movies/forms/form.html', {'form': movies})
+        context = {
+            'movies_form': MoviesForm(initial=processed_data),
+            'movie_locations_form': LocationForm(),
+        }
+        return render(request, 'movies/forms/form.html', context)
 
 
 class LibraryView(ListView):
@@ -80,6 +90,10 @@ class MovieDetailView(DetailView):
     model = Movies
     template_name = 'movies/movie/movies_detail.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(MovieDetailView, self).get_context_data(**kwargs)
+        context['location'] = MovieLocation.objects.all()
+        return context
 
 class MovieUpdate(LoginRequiredMixin, UpdateView):
     form_class = MoviesForm
