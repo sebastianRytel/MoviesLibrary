@@ -40,7 +40,7 @@ def save_to_library(request):
         return render(request, 'movies/forms/form.html', {'form': movies})
 
 
-class MovieCreateEmpty(CreateView):
+class MovieCreateEmpty(LoginRequiredMixin, CreateView):
     form_class = MoviesForm
     model = Movies
     template_name = 'movies/forms/form_empty.html'
@@ -50,7 +50,7 @@ class MovieCreateEmpty(CreateView):
         return resp
 
 
-class MovieCreate(CreateView):
+class MovieCreate(LoginRequiredMixin, CreateView):
     form_class = MoviesForm
     model = Movies
     template_name = 'movies/forms/form.html'
@@ -62,7 +62,7 @@ class MovieCreate(CreateView):
         return render(request, 'movies/forms/form.html', {'form': movies})
 
 
-class LibraryView(ListView):
+class LibraryView(LoginRequiredMixin, ListView):
     model = Movies
     template_name = 'movies/movie/library.html'
     context_object_name = 'movies'
@@ -74,7 +74,7 @@ class LibraryView(ListView):
         return context
 
 
-class MovieDetailView(DetailView):
+class MovieDetailView(LoginRequiredMixin, DetailView):
     model = Movies
     template_name = 'movies/movie/movies_detail.html'
 
@@ -86,7 +86,7 @@ class MovieUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'movies/forms/form_update.html'
 
 
-class MovieDelete(DeleteView):
+class MovieDelete(LoginRequiredMixin, DeleteView):
     model = Movies
     template_name = "movies/movie/movie_delete.html"
     success_url = reverse_lazy("movies-library")
@@ -99,14 +99,14 @@ class TagCreate(LoginRequiredMixin, CreateView):
     extra_context = {"update": False}
 
 
-class TagList(ListView):
+class TagList(LoginRequiredMixin, ListView):
     model = MovieTag
     context_object_name = 'tags'
     ordering = ['tag']
     template_name = 'movies/tag/tags_list.html'
 
 
-class TagUpdate(UpdateView):
+class TagUpdate(LoginRequiredMixin, UpdateView):
     form_class = MovieTagForm
     model = MovieTag
     context_object_name = 'tag'
@@ -114,7 +114,7 @@ class TagUpdate(UpdateView):
     extra_context = {"update": True}
 
 
-class TagDelete(DeleteView):
+class TagDelete(LoginRequiredMixin, DeleteView):
     model = MovieTag
     template_name = "movies/tag/tag_delete.html"
     success_url = reverse_lazy("tags-list")
