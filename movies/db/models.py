@@ -97,7 +97,7 @@ class Movies(models.Model):
     Rating = models.IntegerField(choices=RANKING_CHOICES, default=0)
     Location = models.CharField(max_length=10, choices=WHERE_TO_WATCH, default='')
     watched = models.BooleanField(default=True)
-    movie_location = models.ForeignKey(MovieLocation, on_delete=models.PROTECT)
+    movie_location = models.ForeignKey(MovieLocation, on_delete=models.PROTECT, verbose_name='movie location')
 
     class Meta:
         unique_together = ("Title", "Year")

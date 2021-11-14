@@ -1,12 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.db import transaction
 
 from movies.services.create_data_for_db import create_data
 from movies.services.searcher import search_all, search_exact, search_by_id
 from movies.services.new_tag_from_search import create_new_tag
-from movies.db.form import MoviesForm, MovieTagForm, LocationForm, UserCommitForm
+from movies.db.form import MoviesForm, MovieTagForm, LocationForm, UserCommitForm, MoviesFormSet
 from movies.db.models import Movies, MovieTag, MovieLocation
 from movies.db.filters import MovieFilter
 
@@ -49,17 +51,20 @@ def save_to_library(request):
         return render(request, 'movies/forms/form.html', context)
 
 
-class MovieCreateEmpty(CreateView):
+class MovieCreateEmpty(LoginRequiredMixin, CreateView):
     form_class = MoviesForm
     model = Movies
-    template_name = 'movies/forms/form_empty.html'
+    # template_name = 'movies/forms/form_empty.html'
 
-    def get(self, *args, **kwargs):
-        resp = super().get(*args, **kwargs)
-        return resp
+    def get(self, request, *args, **kwargs):
+        context = {
+            'movies_form': MoviesForm(),
+            'movie_locations_form': LocationForm(),
+        }
+        return render(request, 'movies/forms/form_empty.html', context)
 
 
-class MovieCreate(CreateView):
+class MovieCreate(LoginRequiredMixin, CreateView):
     form_class = MoviesForm
     model = Movies
     template_name = 'movies/forms/form.html'
@@ -73,8 +78,7 @@ class MovieCreate(CreateView):
         }
         return render(request, 'movies/forms/form.html', context)
 
-
-class LibraryView(ListView):
+class LibraryView(LoginRequiredMixin, ListView):
     model = Movies
     template_name = 'movies/movie/library.html'
     context_object_name = 'movies'
@@ -85,24 +89,58 @@ class LibraryView(ListView):
         context['filter'] = MovieFilter(self.request.GET, queryset=self.get_queryset())
         return context
 
-
-class MovieDetailView(DetailView):
+class MovieDetailView(LoginRequiredMixin, DetailView):
     model = Movies
     template_name = 'movies/movie/movies_detail.html'
 
     def get_context_data(self, **kwargs):
         context = super(MovieDetailView, self).get_context_data(**kwargs)
-        context['location'] = MovieLocation.objects.all()
+        movie = self.get_object()
+        context['location'] = MovieLocation.objects.filter(id=movie.movie_location_id)
         return context
+
 
 class MovieUpdate(LoginRequiredMixin, UpdateView):
     form_class = MoviesForm
     model = Movies
-    context_object_name = 'movie'
     template_name = 'movies/forms/form_update.html'
 
+    def get_context_data(self, **kwargs):
+        data = super(MovieUpdate, self).get_context_data(**kwargs)
+        data['movie'] = MoviesFormSet(instance=self.object)
+        print(data)
+        return data
 
-class MovieDelete(DeleteView):
+    # def form_valid(self, form):
+    #     context = self.get_context_data()
+    #     titles = context['titles']
+    #     with transaction.atomic():
+    #         form.instance.created_by = self.request.user
+    #         self.object = form.save()
+    #         if titles.is_valid():
+    #             titles.instance = self.object
+    #             titles.save()
+    #     return super(MovieUpdate, self).form_valid(form)
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     movie = self.get_object()
+    #     context['second_model'] = MovieLocation.objects.get(id=movie.movie_location_id)
+    #
+    #     context['form'] = self.form_class(instance=self.object)
+    #     context['form2'] = self.second_form_class(initial={
+    #         'CDA': self.object.movie_location.CDA,
+    #         'Netflix': self.object.movie_location.Netflix,
+    #         'HboGO': self.object.movie_location.HboGO,
+    #         'AmazonPrime': self.object.movie_location.AmazonPrime,
+    #         'HardDrive': self.object.movie_location.HardDrive,
+    #     })
+    #     return context
+    #
+
+
+
+class MovieDelete(LoginRequiredMixin, DeleteView):
     model = Movies
     template_name = "movies/movie/movie_delete.html"
     success_url = reverse_lazy("movies-library")
@@ -115,14 +153,14 @@ class TagCreate(LoginRequiredMixin, CreateView):
     extra_context = {"update": False}
 
 
-class TagList(ListView):
+class TagList(LoginRequiredMixin, ListView):
     model = MovieTag
     context_object_name = 'tags'
     ordering = ['tag']
     template_name = 'movies/tag/tags_list.html'
 
 
-class TagUpdate(UpdateView):
+class TagUpdate(LoginRequiredMixin, UpdateView):
     form_class = MovieTagForm
     model = MovieTag
     context_object_name = 'tag'
@@ -130,7 +168,7 @@ class TagUpdate(UpdateView):
     extra_context = {"update": True}
 
 
-class TagDelete(DeleteView):
+class TagDelete(LoginRequiredMixin, DeleteView):
     model = MovieTag
     template_name = "movies/tag/tag_delete.html"
     success_url = reverse_lazy("tags-list")

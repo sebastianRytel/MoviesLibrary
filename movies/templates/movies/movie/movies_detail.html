@@ -40,13 +40,12 @@
         <h5>IMDB link:</h5>
             <h6><a class="movie-title" href="{{ object.movieURL }}">{{ object.movieURL }}</a></h6>
         <h5>CDA Link:</h5>
+            {{ location }}
             {% for location in location.values %}
                 {% for key, value in location.items %}
-                    <h6>{{ key }}: {{ value }}</h6>
-
-
-{#            <h6><a class="movie-title" href="{{ object.movie_location.CDA }}">{{ object.movie_location.CDA }}</a></h6>#}
-{#            <h6><a class="movie-title" href="{{ object.movie_location }}">{{ object.movie_location }}</a></h6>#}
+                    {% if value %}
+                        <h6>{{ key }}: {{ value }}</h6>
+                    {% endif %}
                 {% endfor %}
             {% endfor %}
         </div>

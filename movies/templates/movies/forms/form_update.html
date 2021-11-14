@@ -4,7 +4,9 @@
     <div class="content-section">
         <form method="POST">
             {% csrf_token %}
-            {% crispy form form.helper %}
+            {{ form|crispy }}
+            {{ form2|crispy }}
+            <button type="submit">Button</button>
         </form>
     </div>
 {% endblock %}

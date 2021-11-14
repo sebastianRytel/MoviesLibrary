@@ -5,7 +5,6 @@
         <form action="." method="POST">
             {% csrf_token %}
             {{ movies_form|crispy }}
-            {{ user_commit_form|crispy }}
             {{ movie_locations_form|crispy }}
         </form>
     </div>
