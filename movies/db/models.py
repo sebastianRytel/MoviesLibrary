@@ -36,15 +36,6 @@ class MovieTag(models.Model):
             "tag-delete", kwargs={"slug": self.slug}
         )
 
-
-class MovieLocation(models.Model):
-    CDA = models.CharField(max_length=50, blank=True)
-    Netflix = models.CharField(max_length=50, blank=True)
-    HboGO = models.CharField(max_length=50, blank=True)
-    AmazonPrime = models.CharField(max_length=50, blank=True)
-    HardDrive = models.CharField(max_length=50, blank=True)
-
-
 class Movies(models.Model):
 
     # RANKING_CHOICES = (
@@ -95,9 +86,12 @@ class Movies(models.Model):
     movieURL = models.URLField(max_length=40, blank=True)
     movie_tag = models.ManyToManyField(MovieTag)
     Rating = models.IntegerField(choices=RANKING_CHOICES, default=0)
-    Location = models.CharField(max_length=10, choices=WHERE_TO_WATCH, default='')
     watched = models.BooleanField(default=True)
-    movie_location = models.ForeignKey(MovieLocation, on_delete=models.PROTECT, verbose_name='movie location')
+    CDA = models.CharField(max_length=250, blank=True)
+    Netflix = models.CharField(max_length=250, blank=True)
+    HboGO = models.CharField(max_length=250, blank=True)
+    AmazonPrime = models.CharField(max_length=250, blank=True)
+    HardDrive = models.CharField(max_length=250, blank=True)
 
     class Meta:
         unique_together = ("Title", "Year")

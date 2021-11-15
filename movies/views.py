@@ -8,8 +8,8 @@ from django.db import transaction
 from movies.services.create_data_for_db import create_data
 from movies.services.searcher import search_all, search_exact, search_by_id
 from movies.services.new_tag_from_search import create_new_tag
-from movies.db.form import MoviesForm, MovieTagForm, LocationForm, UserCommitForm, MoviesFormSet
-from movies.db.models import Movies, MovieTag, MovieLocation
+from movies.db.form import MoviesForm, MovieTagForm, UserCommitForm
+from movies.db.models import Movies, MovieTag
 from movies.db.filters import MovieFilter
 
 
@@ -32,20 +32,18 @@ def search(request):
 
 def save_to_library(request):
     if request.method == 'POST':
-        movies = MoviesForm(request.POST)
-        movie_locations = LocationForm(request.POST)
+        movie = MoviesForm(request.POST)
+        user_commit = UserCommitForm(request.POST)
         context = {
-            'movies_form': movies,
-
-            'movie_locations_form': movie_locations,
+            'movies_form': movie,
+            'movie_locations_form': user_commit,
         }
-        if movies.is_valid() and movie_locations.is_valid():
-            new_tags = create_new_tag(movies.cleaned_data)
-            movie_title = movies.cleaned_data['Title']
-            movie_locations = MovieLocation.objects.create(**movie_locations.cleaned_data)
-            movie_locations.save()
-            movie = Movies.objects.create(**movies.cleaned_data, movie_location=movie_locations)
-            movie.save()
+        if movie.is_valid() and user_commit.is_valid():
+            new_tags = create_new_tag(movie.cleaned_data)
+            movie_title = movie.cleaned_data['Title']
+            joined_two_forms = {**movie.cleaned_data, **user_commit.cleaned_data}
+            new_movie = Movies.objects.create(**joined_two_forms)
+            new_movie.save()
             return render(request, 'movies/movie/saved_to_db.html', {'title': movie_title, 'new_tags': new_tags})
         # returns form with validation errors, if fields are not valid as per fields definition in models.
         return render(request, 'movies/forms/form.html', context)
@@ -59,7 +57,7 @@ class MovieCreateEmpty(LoginRequiredMixin, CreateView):
     def get(self, request, *args, **kwargs):
         context = {
             'movies_form': MoviesForm(),
-            'movie_locations_form': LocationForm(),
+            'user_commit_form': UserCommitForm()
         }
         return render(request, 'movies/forms/form_empty.html', context)
 
@@ -74,7 +72,7 @@ class MovieCreate(LoginRequiredMixin, CreateView):
         processed_data = create_data(movie_details)
         context = {
             'movies_form': MoviesForm(initial=processed_data),
-            'movie_locations_form': LocationForm(),
+            'user_commit_form': UserCommitForm()
         }
         return render(request, 'movies/forms/form.html', context)
 
@@ -93,11 +91,11 @@ class MovieDetailView(LoginRequiredMixin, DetailView):
     model = Movies
     template_name = 'movies/movie/movies_detail.html'
 
-    def get_context_data(self, **kwargs):
-        context = super(MovieDetailView, self).get_context_data(**kwargs)
-        movie = self.get_object()
-        context['location'] = MovieLocation.objects.filter(id=movie.movie_location_id)
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super(MovieDetailView, self).get_context_data(**kwargs)
+    #     movie = self.get_object()
+    #     context['location'] = MovieLocation.objects.filter(id=movie.movie_location_id)
+    #     return context
 
 
 class MovieUpdate(LoginRequiredMixin, UpdateView):
@@ -105,39 +103,11 @@ class MovieUpdate(LoginRequiredMixin, UpdateView):
     model = Movies
     template_name = 'movies/forms/form_update.html'
 
-    def get_context_data(self, **kwargs):
-        data = super(MovieUpdate, self).get_context_data(**kwargs)
-        data['movie'] = MoviesFormSet(instance=self.object)
-        print(data)
-        return data
-
-    # def form_valid(self, form):
-    #     context = self.get_context_data()
-    #     titles = context['titles']
-    #     with transaction.atomic():
-    #         form.instance.created_by = self.request.user
-    #         self.object = form.save()
-    #         if titles.is_valid():
-    #             titles.instance = self.object
-    #             titles.save()
-    #     return super(MovieUpdate, self).form_valid(form)
-
     # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     movie = self.get_object()
-    #     context['second_model'] = MovieLocation.objects.get(id=movie.movie_location_id)
-    #
-    #     context['form'] = self.form_class(instance=self.object)
-    #     context['form2'] = self.second_form_class(initial={
-    #         'CDA': self.object.movie_location.CDA,
-    #         'Netflix': self.object.movie_location.Netflix,
-    #         'HboGO': self.object.movie_location.HboGO,
-    #         'AmazonPrime': self.object.movie_location.AmazonPrime,
-    #         'HardDrive': self.object.movie_location.HardDrive,
-    #     })
-    #     return context
-    #
-
+    #     data = super(MovieUpdate, self).get_context_data(**kwargs)
+    #     data['movie'] = MoviesFormSet(instance=self.object)
+    #     print(data)
+    #     return data
 
 
 class MovieDelete(LoginRequiredMixin, DeleteView):

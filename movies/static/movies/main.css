@@ -48,7 +48,7 @@ li.list {
 }
 
 .row{
-  justify-content: center;
+  justify-content: left;
 }
 
 .site-header .navbar-nav .nav-link:hover {

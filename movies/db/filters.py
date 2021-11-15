@@ -29,5 +29,4 @@ class MovieFilter(FilterSet):
             'movie_tag': ['exact'],
             'Rating': ['exact'],
             'watched': ['exact'],
-            'Location': ['exact'],
         }
