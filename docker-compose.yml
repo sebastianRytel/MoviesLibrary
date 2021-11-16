@@ -1,12 +1,22 @@
 version: '3'
 
 services:
-  MoviesLibrary:
-    build: .
-    command: python manage.py 0.0.0.0:8000
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
+  web:
+      build: .
+      command: python manage.py runserver 0.0.0.0:8000
+      volumes:
+        - .:/app/
+      ports:
+        - "8000:8000"
+      depends_on:
+        - db
   db:
+    env_file:
+      - .env
     image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=NAME
+      - POSTGRES_USER=USER
+      - POSTGRES_PASSWORD=PASSWORD

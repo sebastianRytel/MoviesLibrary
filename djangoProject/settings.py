@@ -9,11 +9,16 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-import os.path
-from pathlib import Path
 import dotenv
+import os.path
+import storages.backends.s3boto3
 
+from pathlib import Path
+from os import getenv, path
+from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -40,6 +45,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'movies.apps.MoviesConfig',
     'crispy_forms',
+    'storages',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -85,8 +91,12 @@ WSGI_APPLICATION = 'djangoProject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': getenv("RDS_NAME"),
+        'USER': getenv("RDS_USERNAME"),
+        'PASSWORD': getenv("RDS_PASSWORD"),
+        'HOST': getenv("RDS_HOSTNAME"),
+        'PORT': getenv("RDS_PORT"),
     }
 }
 
@@ -142,3 +152,12 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 LOGIN_REDIRECT_URL = 'movies-library'
 LOGIN_URL = 'login'
+
+
+if path.isfile(".env"):
+    AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
+    AWS_REGION_NAME = config("AWS_REGION_NAME")
+    AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
+    AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+    STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
