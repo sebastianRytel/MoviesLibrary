@@ -41,9 +41,11 @@ def save_to_library(request):
         if movie.is_valid() and user_commit.is_valid():
             new_tags = create_new_tag(movie.cleaned_data)
             movie_title = movie.cleaned_data['Title']
-            joined_two_forms = {**movie.cleaned_data, **user_commit.cleaned_data}
-            new_movie = Movies.objects.create(**joined_two_forms)
+            new_movie = Movies.objects.create(**movie.cleaned_data)
             new_movie.save()
+            xyz = new_movie.objects.create(**user_commit.cleaned_data)
+            xyz.save()
+            # new_movie = Movies.objects.create(**joined_two_forms)
             return render(request, 'movies/movie/saved_to_db.html', {'title': movie_title, 'new_tags': new_tags})
         # returns form with validation errors, if fields are not valid as per fields definition in models.
         return render(request, 'movies/forms/form.html', context)
