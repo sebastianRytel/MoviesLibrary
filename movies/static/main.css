@@ -1,10 +1,10 @@
 body {
   background-image: url("/media/background.jpg");
-  background-repeat: repeat;
-  background-position: center center;
+  background-repeat: no-repeat;
+  /*background-position: center center;*/
   background-size: cover;
 
-  background-origin: border-box;
+  /*background-origin: border-box;*/
   margin-top: 5rem;
 }
 
@@ -48,8 +48,9 @@ li.list {
 }
 
 .row{
-  justify-content: center;
+  justify-content: left;
 }
+
 
 .site-header .navbar-nav .nav-link:hover {
   color: #ffffff;
@@ -60,7 +61,6 @@ li.list {
 }
 
 .content-section {
-
   padding: 10px 20px;
   border: 1px solid darkgrey;
   border-radius: 10px;
@@ -108,20 +108,22 @@ a.movie-title{
   display: inline-block;
 }
 
-.column-right{
-  border-left: 3px solid;
+.column-1st, .column-2nd, .column-3rd{
+  padding-right: 15px !important;
+  border-right: 3px solid;
   border-color: darkgrey;
-  padding-left: 15px !important;
+
 }
 
-.column-left{
+.column-2nd, .column-3rd, .column-4th{
+  padding-left: 15px !important;
   padding-right: 15px !important;
 }
 
-.column-right-row {
-  border-bottom: 3px solid;
-  border-color: darkgrey;
-  align-items: center;
+.col-sm {
+  display: block;
+  margin-top: auto;
+  margin-bottom: auto
 }
 
 .button-save-form{
@@ -141,14 +143,10 @@ a.movie-title{
   width: 130px;
 }
 
-.col-sm {
-  display: block;
-  margin-top: auto;
-  margin-bottom: auto
-}
-
-
 .custom-radio {
   padding-bottom: 5px;
 }
 
+.radiobutton{
+  padding-top: 5px;
+}

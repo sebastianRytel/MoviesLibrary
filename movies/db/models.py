@@ -71,7 +71,11 @@ class Movies(models.Model):
     movieURL = models.URLField(max_length=40, blank=True)
     movie_tag = models.ManyToManyField(MovieTag)
     Rating = models.IntegerField(choices=RANKING_CHOICES, default='')
-    Location = models.CharField(max_length=10, choices=WHERE_TO_WATCH, default='')
+    CDA = models.CharField(max_length=300, blank=True, default='')
+    Netflix = models.CharField(max_length=300, blank=True, default='')
+    HboGO = models.CharField(max_length=300, blank=True, default='')
+    AmazonPrime = models.CharField(max_length=300, blank=True, default='')
+    HardDrive = models.CharField(max_length=300, blank=True, default='')
     watched = models.BooleanField(default=True)
 
     class Meta:

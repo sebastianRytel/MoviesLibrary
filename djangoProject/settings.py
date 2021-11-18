@@ -16,6 +16,8 @@ import storages.backends.s3boto3
 from pathlib import Path
 from os import getenv, path
 from decouple import config
+from django.core.management.utils import get_random_secret_key
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 
 
@@ -31,15 +33,12 @@ dotenv_file = os.path.join(BASE_DIR, ".env")
 if os.path.isfile(dotenv_file):
     dotenv.load_dotenv(dotenv_file)
 
-SECRET_KEY = os.environ["SECRET_KEY"]
+SECRET_KEY = get_random_secret_key()
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
-
-
-# Application definition
 
 INSTALLED_APPS = [
     'users.apps.UsersConfig',
@@ -85,20 +84,33 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'djangoProject.wsgi.application'
 
+FILTERS_EMPTY_CHOICE_LABEL = None
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+#
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': getenv("RDS_NAME"),
-        'USER': getenv("RDS_USERNAME"),
-        'PASSWORD': getenv("RDS_PASSWORD"),
-        'HOST': getenv("RDS_HOSTNAME"),
-        'PORT': getenv("RDS_PORT"),
+
+
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'postgres',
+            'USER': 'postgres',
+            'PASSWORD': 'postgres',
+            'HOST': 'movies-library-db',
+            'PORT': '5432',
+        }
+    }
 
 
 # Password validation
@@ -137,7 +149,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -153,11 +169,11 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = 'movies-library'
 LOGIN_URL = 'login'
 
-
-if path.isfile(".env"):
-    AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
-    AWS_REGION_NAME = config("AWS_REGION_NAME")
-    AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
-    AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
-    AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
-    STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+#
+# if path.isfile(".env"):
+#     AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
+#     AWS_REGION_NAME = config("AWS_REGION_NAME")
+#     AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
+#     AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
+#     AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+#     STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"

@@ -3,20 +3,36 @@ version: '3'
 services:
   web:
       build: .
-      command: python manage.py runserver 0.0.0.0:8000
-      volumes:
-        - .:/app/
+      container_name: movies-library
+      environment:
+        - DJANGO_SETTINGS_MODULE=djangoProject.settings
+      entrypoint: ["/bin/sh", "-c"]
+      command:
+        - |
+          python manage.py makemigrations
+          python manage.py migrate
+          python manage.py runserver 0.0.0.0:8000
       ports:
         - "8000:8000"
       depends_on:
-        - db
-  db:
-    env_file:
-      - .env
-    image: postgres
+        movies-library-db:
+          condition: service_healthy
+
+
+  movies-library-db:
+    image: postgres:12.5
+    container_name: movies-library-db
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     ports:
       - "5432:5432"
-    environment:
-      - POSTGRES_DB=NAME
-      - POSTGRES_USER=USER
-      - POSTGRES_PASSWORD=PASSWORD
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 30s
+      retries: 6
+    restart: always

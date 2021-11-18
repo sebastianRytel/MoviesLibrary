@@ -1,8 +1,7 @@
 {% extends 'movies/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-    <article class="media content-section">
-
+    <article class="media content-section" style="width: 150%">
         <div class="col-6" style="padding-top: 5px">
             <img src={{ object.Poster }}>
         </div>
@@ -36,13 +35,18 @@
         <h5>My comments:</h5>
         <h6>{{ object.user_comments }}</h6>
         <h5>Where to watch:</h5>
-        <h6>{{ object.Location }}</h6>
+        {% for location, link in locations.items %}
+            {% if link != "" %}
+                <h6>{{ location }}:</h6>
+                <h6><a class="movie-title" href="{{ link }}">{{ link }}</a></h6>
+            {% endif %}
+        {% endfor %}
         <h5>IMDB link:</h5>
             <h6><a class="movie-title" href="{{ object.movieURL }}">{{ object.movieURL }}</a></h6>
         </div>
     <br>
     </article>
-        <div class="row">
+        <div class="row" style="justify-content: center; width: 150%">
             <button name="update"
                     type="button"
                     class="btn btn-danger"

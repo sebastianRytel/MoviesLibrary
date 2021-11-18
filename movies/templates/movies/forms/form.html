@@ -1,8 +1,7 @@
 {% extends 'movies/base.html' %}
 {% load crispy_forms_tags %}
-
 {% block content %}
-    <div class="content-section">
+    <div class="content-section" style="width: 150%">
         <form action="{% url 'movies-save' %}" method="POST">
             {% csrf_token %}
             {% crispy form form.helper %}

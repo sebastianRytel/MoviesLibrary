@@ -35,8 +35,10 @@
     </div>
     <div class="col-4" style="justify-content: center">
         {% if movie.watched is True %}
-            <h4>Watched</h4>
+            <img src="/media/various/ok.jpg">
+            <h4 style="color:green">Watched</h4>
         {% else %}
+            <img src="/media/various/not_ok.jpg">
             <h4 style="color:red">To be watched</h4>
         {% endif %}
         <button name="delete"

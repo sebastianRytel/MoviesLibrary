@@ -1,33 +1,34 @@
-from movies.db.models import Movies
-from django_filters import ChoiceFilter, MultipleChoiceFilter, FilterSet
+import django_filters
+
+from movies.db.models import Movies, MovieTag
+from django_filters import FilterSet, ChoiceFilter, ModelMultipleChoiceFilter
+from django import forms
+from django.utils.safestring import mark_safe
 
 class MovieFilter(FilterSet):
 
     RANKING_CHOICES = (
-        (5, '5'),
-        (4, '4'),
-        (3, '3'),
-        (2, '2'),
-        (1, '1'),
-        (0, '0'),
+        (5, mark_safe('<img src="/media/rating_icos/rating_5_ico.jpg">')),
+        (4, mark_safe('<img src="/media/rating_icos/rating_4_ico.jpg">')),
+        (3, mark_safe('<img src="/media/rating_icos/rating_3_ico.jpg">')),
+        (2, mark_safe('<img src="/media/rating_icos/rating_2_ico.jpg">')),
+        (1, mark_safe('<img src="/media/rating_icos/rating_1_ico.jpg">')),
+        (0, mark_safe('<img src="/media/rating_icos/rating_0_ico.jpg">')),
     )
 
-    WHERE_TO_WATCH = (
-        ('HARD DRIVE', 'harddrive'),
-        ('CDA', 'cda'),
-        ('NETFLIX', 'Netflix')
+    IF_WATCHED = (
+        (0, "NO"),
+        (1, "YES"),
     )
 
-    Location = ChoiceFilter(choices=WHERE_TO_WATCH, empty_label='All')
-    Rating = MultipleChoiceFilter(choices=RANKING_CHOICES)
+    Rating = ChoiceFilter(choices=RANKING_CHOICES, widget=forms.RadioSelect)
+
+    watched = ChoiceFilter(choices=IF_WATCHED, widget=forms.RadioSelect, label="Did you see this movie?")
+
+    movie_tag = ModelMultipleChoiceFilter(widget=forms.CheckboxSelectMultiple, queryset=MovieTag.objects.all())
 
     class Meta:
         model = Movies
-        fields = {
-            'Title': ['icontains'],
-            'Year': ['exact'],
-            'movie_tag': ['exact'],
-            'Rating': ['exact'],
-            'watched': ['exact'],
-            'Location': ['exact'],
-        }
+        fields = ['Title','Rating', 'watched', 'movie_tag']
+        filter_vertical = 'watched'
+
