@@ -1,0 +1,152 @@
+body {
+  background-image: url("/media/background.jpg");
+  background-repeat: no-repeat;
+  /*background-position: center center;*/
+  background-size: cover;
+
+  /*background-origin: border-box;*/
+  margin-top: 5rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: lightgray;
+  font-family: sans-serif;
+
+}
+
+h5 {
+  padding-top: 5px;
+}
+
+ul {
+  margin: 0;
+}
+
+label {
+  font-size: 18px;
+  font-weight: normal;
+  font-family: sans-serif;
+  color: lightgray;
+}
+
+img {
+  border-radius: 10px
+}
+
+li.list {
+  color:lightgray;
+  font-size: 20px;
+}
+
+.tags {
+  color:lightgray;
+  font-size: 15px;
+}
+
+.site-header .navbar-nav .nav-link {
+  color: #cbd5db;
+}
+
+.row{
+  justify-content: left;
+}
+
+
+.site-header .navbar-nav .nav-link:hover {
+  color: #ffffff;
+}
+
+.site-header .navbar-nav .nav-link.active {
+  font-weight: 500;
+}
+
+.content-section {
+  padding: 10px 20px;
+  border: 1px solid darkgrey;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+a.movie-title:hover {
+  color: #428bca;
+  text-decoration: none;
+}
+
+a.movie-title{
+  color: darkgrey;
+}
+
+.article-content {
+  color: darkgrey;
+  white-space: pre-line;
+}
+
+.article-img {
+  height: 65px;
+  width: 65px;
+  margin-right: 16px;
+}
+
+.article-metadata {
+  padding-bottom: 1px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid #e3e3e3
+}
+
+.account-img {
+  height: 125px;
+  width: 125px;
+  margin-right: 20px;
+  margin-bottom: 16px;
+}
+
+.account-heading {
+  font-size: 2.5rem;
+}
+
+.form-check {
+  display: inline-block;
+}
+
+.column-1st, .column-2nd, .column-3rd{
+  padding-right: 15px !important;
+  border-right: 3px solid;
+  border-color: darkgrey;
+
+}
+
+.column-2nd, .column-3rd, .column-4th{
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+
+.col-sm {
+  display: block;
+  margin-top: auto;
+  margin-bottom: auto
+}
+
+.button-save-form{
+  background-color: red;
+}
+
+.btn-danger{
+  background-image:linear-gradient(to right, darkred, red);
+}
+
+.btn-success {
+  background-image:linear-gradient(to right, darkgreen, green);
+}
+
+.library-button {
+  margin-top: 10px;
+  width: 130px;
+}
+
+.custom-radio {
+  padding-bottom: 5px;
+}
+
+.radiobutton{
+  padding-top: 5px;
+}
