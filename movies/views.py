@@ -80,7 +80,6 @@ class MovieDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print(context)
         context['locations'] = {
             'CDA': self.object.CDA,
             'Netflix': self.object.Netflix,
@@ -88,7 +87,6 @@ class MovieDetailView(LoginRequiredMixin, DetailView):
             'AmazonPrime': self.object.AmazonPrime,
             'HardDrive': self.object.HardDrive,
         }
-        print(self.object.CDA)
         return context
 
 

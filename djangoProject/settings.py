@@ -68,24 +68,24 @@ WSGI_APPLICATION = 'djangoProject.wsgi.application'
 FILTERS_EMPTY_CHOICE_LABEL = None
 
 
-# if DEBUG:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.sqlite3',
-#             'NAME': BASE_DIR / 'db.sqlite3',
-#         }
-#     }
-# else:
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': "postgres",
-        'USER': "postgres",
-        'PASSWORD': "MQSw_4Q2A88UvCyh9KfVMqWSbDb7_mt7.wdButKxDSfkj",
-        'HOST': "movies-library-db.c3phevmr8mmy.us-east-1.rds.amazonaws.com",
-        'PORT': '5432',
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': "postgres",
+            'USER': "postgres",
+            'PASSWORD': "MQSw_4Q2A88UvCyh9KfVMqWSbDb7_mt7.wdButKxDSfkj",
+            'HOST': "movies-library-db.c3phevmr8mmy.us-east-1.rds.amazonaws.com",
+            'PORT': '5432',
+        }
+    }
 
 
 
@@ -119,7 +119,7 @@ USE_TZ = True
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR / "static"
+    BASE_DIR / "static",
 ]
 
 
