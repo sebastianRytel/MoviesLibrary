@@ -8,17 +8,17 @@
         <div class='col-6' style="padding-left: 5px">
         <h1>{{ object.Title }} {{ object.Year }}</h1>
         {% if object.Rating == 5 %}
-            <img src="/staticfiles/media/rating_icos/rating_5_ico.jpg">
+            <img src="/static/rating_icos/rating_5_ico.jpg">
         {% elif object.Rating == 4 %}
-            <img src="/staticfiles/media/rating_icos/rating_4_ico.jpg">
+            <img src="/static/rating_icos/rating_4_ico.jpg">
         {% elif object.Rating == 3 %}
-            <img src="/staticfiles/media/rating_icos/rating_3_ico.jpg">
+            <img src="/static/rating_icos/rating_3_ico.jpg">
         {% elif object.Rating == 2 %}
-            <img src="/staticfiles/media/rating_icos/rating_2_ico.jpg">
+            <img src="/static/rating_icos/rating_2_ico.jpg">
         {% elif object.Rating == 1 %}
-            <img src="/staticfiles/media/rating_icos/rating_1_ico.jpg">
+            <img src="/static/rating_icos/rating_1_ico.jpg">
         {% elif object.Rating == 0 %}
-            <img src="/staticfiles/media/rating_icos/rating_0_ico.jpg">
+            <img src="/static/rating_icos/rating_0_ico.jpg">
         {% endif %}
         <p></p>
         <h4>IMBD rating: {{ object.imdbRating }}</h4>
