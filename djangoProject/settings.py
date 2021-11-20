@@ -75,7 +75,7 @@ if DEBUG:
             'NAME': BASE_DIR / 'db.sqlite3',
         }
     }
-else:
+elif DEBUG is False:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
