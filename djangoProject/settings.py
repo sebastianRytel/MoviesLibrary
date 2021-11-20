@@ -68,24 +68,24 @@ WSGI_APPLICATION = 'djangoProject.wsgi.application'
 FILTERS_EMPTY_CHOICE_LABEL = None
 
 
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
+# if DEBUG:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': BASE_DIR / 'db.sqlite3',
+#         }
+#     }
+# else:
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config("RDS_NAME"),
+        'USER': config("RDS_USER"),
+        'PASSWORD': config("RDS_PASSWORD"),
+        'HOST': config("HOST"),
+        'PORT': config("PORT"),
     }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': config("RDS_NAME"),
-            'USER': config("RDS_USER"),
-            'PASSWORD': config("RDS_PASSWORD"),
-            'HOST': config("HOST"),
-            'PORT': config("PORT"),
-        }
-    }
+}
 
 
 
