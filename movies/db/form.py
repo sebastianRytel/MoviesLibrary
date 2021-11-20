@@ -16,11 +16,11 @@ class MoviesForm(ModelForm):
             'Location': forms.RadioSelect(),
         }
         labels = {
-            'CDA': mark_safe('<img src="/staticfiles/media/local_icos/cda_ico.jpg">'),
-            'HardDrive': mark_safe('<img src="/staticfiles/media/local_icos/hdd_ico.jpg">'),
-            'Netflix': mark_safe('<img src="/staticfiles/media/local_icos/flix_ico.jpg">'),
-            'HboGO': mark_safe('<img src="/staticfiles/media/local_icos/hbo_ico.jpg">'),
-            'AmazonPrime': mark_safe('<img src="/staticfiles/media/local_icos/prime_ico.jpg">')
+            'CDA': mark_safe('<img src="/static/local_icos/cda_ico.jpg">'),
+            'HardDrive': mark_safe('<img src="/static/local_icos/hdd_ico.jpg">'),
+            'Netflix': mark_safe('<img src="/static/local_icos/flix_ico.jpg">'),
+            'HboGO': mark_safe('<img src="/static/local_icos/hbo_ico.jpg">'),
+            'AmazonPrime': mark_safe('<img src="/static/local_icos/prime_ico.jpg">')
         }
 
         exclude = ['slug']
