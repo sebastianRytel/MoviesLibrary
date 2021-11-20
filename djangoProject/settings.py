@@ -68,24 +68,24 @@ WSGI_APPLICATION = 'djangoProject.wsgi.application'
 FILTERS_EMPTY_CHOICE_LABEL = None
 
 
-# if DEBUG:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.sqlite3',
-#             'NAME': BASE_DIR / 'db.sqlite3',
-#         }
-#     }
-# else:
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config("RDS_NAME"),
-        'USER': config("RDS_USER"),
-        'PASSWORD': config("RDS_PASSWORD"),
-        'HOST': config("HOST"),
-        'PORT': config("PORT"),
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': config("RDS_NAME"),
+            'USER': config("RDS_USER"),
+            'PASSWORD': config("RDS_PASSWORD"),
+            'HOST': config("HOST"),
+            'PORT': config("PORT"),
+        }
+    }
 
 
 
@@ -117,7 +117,7 @@ USE_TZ = True
 
 
 STATIC_ROOT = BASE_DIR / "static"
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / "staticfiles",
 ]
@@ -141,3 +141,4 @@ AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
 AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
 STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+STATIC_URL = f"{AWS_S3_CUSTOM_DOMAIN}/"
