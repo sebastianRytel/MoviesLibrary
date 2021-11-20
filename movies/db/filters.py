@@ -8,12 +8,12 @@ from django.utils.safestring import mark_safe
 class MovieFilter(FilterSet):
 
     RANKING_CHOICES = (
-        (5, mark_safe('<img src="/media/rating_icos/rating_5_ico.jpg">')),
-        (4, mark_safe('<img src="/media/rating_icos/rating_4_ico.jpg">')),
-        (3, mark_safe('<img src="/media/rating_icos/rating_3_ico.jpg">')),
-        (2, mark_safe('<img src="/media/rating_icos/rating_2_ico.jpg">')),
-        (1, mark_safe('<img src="/media/rating_icos/rating_1_ico.jpg">')),
-        (0, mark_safe('<img src="/media/rating_icos/rating_0_ico.jpg">')),
+        (5, mark_safe('<img src="/staticfiles/media/rating_icos/rating_5_ico.jpg">')),
+        (4, mark_safe('<img src="/staticfiles/media/rating_icos/rating_4_ico.jpg">')),
+        (3, mark_safe('<img src="/staticfiles/media/rating_icos/rating_3_ico.jpg">')),
+        (2, mark_safe('<img src="/staticfiles/media/rating_icos/rating_2_ico.jpg">')),
+        (1, mark_safe('<img src="/staticfiles/media/rating_icos/rating_1_ico.jpg">')),
+        (0, mark_safe('<img src="/staticfiles/media/rating_icos/rating_0_ico.jpg">')),
     )
 
     IF_WATCHED = (
