@@ -135,18 +135,10 @@ LOGIN_REDIRECT_URL = 'movies-library'
 LOGIN_URL = 'login'
 
 
-# if path.isfile(".env"):
-#     AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
-#     AWS_REGION_NAME = config("AWS_REGION_NAME")
-#     AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
-#     AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
-#     AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
-#     STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-
-
-AWS_STORAGE_BUCKET_NAME = "static-files-movies-library"
-AWS_REGION_NAME = "us-east-1"
-AWS_ACCESS_KEY_ID = "AKIA4IDSWTREWM76QWRE"
-AWS_SECRET_ACCESS_KEY = "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"
-AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
-STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+if path.isfile(".env"):
+    AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
+    AWS_REGION_NAME = config("AWS_REGION_NAME")
+    AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
+    AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+    STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
