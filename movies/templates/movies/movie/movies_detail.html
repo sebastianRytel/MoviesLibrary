@@ -2,7 +2,9 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
-    <article class="media content-section" style="width: 150%">
+<div class="row row-center">
+<div class="col-md-8">
+    <article class="media content-section">
         <div class="col-6" style="padding-top: 5px">
             <img src={{ object.Poster }}>
         </div>
@@ -47,11 +49,13 @@
         </div>
     <br>
     </article>
-        <div class="row" style="justify-content: center; width: 150%">
-            <button name="update"
-                    type="button"
-                    class="btn btn-danger"
-                    onclick="location.href='{{ object.get_update_url }}'">
-                    Update Movie</button>
-        </div>
+    <div class="row row-center">
+        <button name="update"
+                type="button"
+                class="btn btn-danger"
+                onclick="location.href='{{ object.get_update_url }}'">
+                Update Movie</button>
+    </div>
+</div>
+</div>
 {% endblock %}
