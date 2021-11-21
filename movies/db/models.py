@@ -3,7 +3,7 @@ from django.urls import reverse
 from django_extensions.db.fields import AutoSlugField
 from django.template.defaultfilters import slugify
 from django.utils.safestring import mark_safe
-
+from django.conf import settings
 
 class MovieTag(models.Model):
     tag = models.CharField(max_length=100)
@@ -40,12 +40,12 @@ class MovieTag(models.Model):
 class Movies(models.Model):
 
     RANKING_CHOICES = (
-        (5, mark_safe('<img src="/static/rating_icos/rating_5_ico.jpg">')),
-        (4, mark_safe('<img src="/static/rating_icos/rating_4_ico.jpg">')),
-        (3, mark_safe('<img src="/static/rating_icos/rating_3_ico.jpg">')),
-        (2, mark_safe('<img src="/static/rating_icos/rating_2_ico.jpg">')),
-        (1, mark_safe('<img src="/static/rating_icos/rating_1_ico.jpg">')),
-        (0, mark_safe('<img src="/static/rating_icos/rating_0_ico.jpg">')),
+        (5, mark_safe(f'<img src="{settings.STATIC_URL}rating_icos/rating_5_ico.jpg">')),
+        (4, mark_safe(f'<img src="{settings.STATIC_URL}rating_icos/rating_4_ico.jpg">')),
+        (3, mark_safe(f'<img src="{settings.STATIC_URL}rating_icos/rating_3_ico.jpg">')),
+        (2, mark_safe(f'<img src="{settings.STATIC_URL}rating_icos/rating_2_ico.jpg">')),
+        (1, mark_safe(f'<img src="{settings.STATIC_URL}rating_icos/rating_1_ico.jpg">')),
+        (0, mark_safe(f'<img src="{settings.STATIC_URL}rating_icos/rating_0_ico.jpg">')),
     )
 
     WHERE_TO_WATCH = (
