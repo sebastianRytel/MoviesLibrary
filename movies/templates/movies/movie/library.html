@@ -20,7 +20,7 @@
         <h2><a class="movie-title" href="{% url 'movie-detail' movie.slug %}">{{ movie.Title }}</a></h2>
         <h4>{{ movie.Year }}</h4>
         {% if movie.Rating == 5 %}
-            <img src="/static/rating_icos/rating_5_ico.jpg">
+            <img src="{{ STATIC_URL }}/rating_icos/rating_5_ico.jpg">
         {% elif movie.Rating == 4 %}
             <img src="/static/rating_icos/rating_4_ico.jpg">
         {% elif movie.Rating == 3 %}
