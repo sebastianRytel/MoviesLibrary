@@ -3,6 +3,7 @@ from crispy_forms.helper import FormHelper, Layout
 from django import forms
 from django.forms import ModelForm
 from django.utils.safestring import mark_safe
+from django.conf import settings
 
 from movies.db.models import Movies, MovieTag
 
@@ -16,11 +17,11 @@ class MoviesForm(ModelForm):
             'Location': forms.RadioSelect(),
         }
         labels = {
-            'CDA': mark_safe('<img src="/static/local_icos/cda_ico.jpg">'),
-            'HardDrive': mark_safe('<img src="/static/local_icos/hdd_ico.jpg">'),
-            'Netflix': mark_safe('<img src="/static/local_icos/flix_ico.jpg">'),
-            'HboGO': mark_safe('<img src="/static/local_icos/hbo_ico.jpg">'),
-            'AmazonPrime': mark_safe('<img src="/static/local_icos/prime_ico.jpg">')
+            'CDA': mark_safe(f'<img src="{settings.STATIC_URL}local_icos/cda_ico.jpg">'),
+            'HardDrive': mark_safe(f'<img src="{settings.STATIC_URL}local_icos/hdd_ico.jpg">'),
+            'Netflix': mark_safe(f'<img src="{settings.STATIC_URL}local_icos/flix_ico.jpg">'),
+            'HboGO': mark_safe(f'<img src="{settings.STATIC_URL}local_icos/hbo_ico.jpg">'),
+            'AmazonPrime': mark_safe(f'<img src="{settings.STATIC_URL}local_icos/prime_ico.jpg">')
         }
 
         exclude = ['slug']

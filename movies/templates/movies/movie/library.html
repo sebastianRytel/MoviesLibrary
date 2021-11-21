@@ -1,5 +1,6 @@
 {% extends 'movies/base.html' %}
 {% load crispy_forms_tags %}
+{% load static %}
 {% block sidebar %}
 <div class="col-md-4">
     <div class="media content-section">
@@ -19,26 +20,30 @@
     <div class="col-6">
         <h2><a class="movie-title" href="{% url 'movie-detail' movie.slug %}">{{ movie.Title }}</a></h2>
         <h4>{{ movie.Year }}</h4>
+    {% if movie.watched is True %}
         {% if movie.Rating == 5 %}
-            <img src="{{ STATIC_URL }}/rating_icos/rating_5_ico.jpg">
+            <img src="{% static "rating_icos/rating_5_ico.jpg" %}">
         {% elif movie.Rating == 4 %}
-            <img src="/static/rating_icos/rating_4_ico.jpg">
+            <img src="{% static "rating_icos/rating_4_ico.jpg" %}">
         {% elif movie.Rating == 3 %}
-            <img src="/static/rating_icos/rating_3_ico.jpg">
+            <img src="{% static "rating_icos/rating_3_ico.jpg" %}">
         {% elif movie.Rating == 2 %}
-            <img src="/static/rating_icos/rating_2_ico.jpg">
+            <img src="{% static "rating_icos/rating_2_ico.jpg" %}">
         {% elif movie.Rating == 1 %}
-            <img src="/static/rating_icos/rating_1_ico.jpg">
+            <img src="{% static "rating_icos/rating_1_ico.jpg" %}">
         {% elif movie.Rating == 0 %}
-            <img src="/static/rating_icos/rating_0_ico.jpg">
+            <img src="{% static "rating_icos/rating_0_ico.jpg" %}">
         {% endif %}
+    {% else %}
+        <h4 style="color:red">Movie has not been watched yet. Cannot be rated.</h4>
+    {% endif %}
     </div>
     <div class="col-4" style="justify-content: center">
         {% if movie.watched is True %}
-            <img src="/static/various/ok.jpg">
+            <img src="{% static "various/ok.jpg" %}">
             <h4 style="color:green">Watched</h4>
         {% else %}
-            <img src="/static/various/not_ok.jpg">
+            <img src="{% static "various/not_ok.jpg" %}">
             <h4 style="color:red">To be watched</h4>
         {% endif %}
         <button name="delete"
