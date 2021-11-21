@@ -1,10 +1,9 @@
 body {
-  background-image: url("./background.jpg");
+  background-image: url("/static/background.jpg");
   background-repeat: no-repeat;
   /*background-position: center center;*/
   background-size: cover;
 
-  /*background-origin: border-box;*/
   margin-top: 5rem;
 }
 

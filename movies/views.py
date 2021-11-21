@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
 
 from movies.services.create_data_for_db import create_data
 from movies.services.searcher import search_all, search_exact, search_by_id
@@ -14,6 +15,7 @@ from movies.db.filters import MovieFilter
 def home(request):
     return render(request, 'movies/home.html')
 
+@login_required
 def search(request):
     if request.method == "POST":
         movie_title_all = request.POST.get('search_all')
@@ -27,7 +29,7 @@ def search(request):
             return render(request, 'movies/movie/search.html', {'movies': [search_by_id(movie_id)]})
     return render(request, 'movies/movie/search.html')
 
-
+@login_required
 def save_to_library(request):
     if request.method == 'POST':
         movies = MoviesForm(request.POST)

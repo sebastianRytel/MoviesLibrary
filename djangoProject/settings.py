@@ -68,14 +68,6 @@ WSGI_APPLICATION = 'djangoProject.wsgi.application'
 FILTERS_EMPTY_CHOICE_LABEL = None
 
 
-# if DEBUG:
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.sqlite3',
-#             'NAME': BASE_DIR / 'db.sqlite3',
-#         }
-#     }
-# else:
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -86,7 +78,6 @@ DATABASES = {
         'PORT': config("PORT"),
     }
 }
-
 
 
 AUTH_PASSWORD_VALIDATORS = [
