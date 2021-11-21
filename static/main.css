@@ -1,7 +1,6 @@
 body {
   background-image: url("background.jpg");
   background-repeat: no-repeat;
-  /*background-position: center center;*/
   background-size: cover;
   margin-top: 5rem;
 }
@@ -147,4 +146,8 @@ a.movie-title{
 
 .radiobutton{
   padding-top: 5px;
+}
+
+.row-center{
+  justify-content: center;
 }

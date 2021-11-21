@@ -1,49 +1,53 @@
 {% extends 'movies/base.html' %}
 {% load crispy_forms_tags %}
 {% block content %}
-<div class="container">
-    <div class="content-section">
-        <div class="row">
-            <div class="col-4">
-                <h1>Tag List:</h1>
+<div class="row-center">
+    <div class="col-md-8">
+        <div class="container">
+            <div class="content-section">
+                <div class="row">
+                    <div class="col-4">
+                        <h1>Tag List:</h1>
+                    </div>
+                    <div class="col-8">
+                        <button name="new"
+                                type="submit"
+                                onclick="location.href='{% url "tag-create" %}'"
+                                class="btn btn-success">
+                                Add new Tag </button>
+                    </div>
+                </div>
             </div>
-            <div class="col-8">
-                <button name="new"
-                        type="submit"
-                        onclick="location.href='{% url "tag-create" %}'"
-                        class="btn btn-success">
-                        Add new Tag </button>
-            </div>
+            {% for tag in tags %}
+                <div class="content-section">
+                    <div class="row">
+                        <div class="col-4">
+                            <h2>{{tag.tag|title}}</h2>
+                        </div>
+                        <div class="col-4" style="display: block;
+                                                    margin-top: auto;
+                                                    margin-bottom: auto">
+                        <button name="update"
+                                type="button"
+                                onclick="location.href='{{ tag.get_update_url }}'"
+                                class="btn btn-success">
+                                Update Tag</button>
+                        </div>
+                        <div class="col-4" style="display: block;
+                                                    margin-top: auto;
+                                                    margin-bottom: auto">
+                            <button name="delete"
+                                    type="submit"
+                                    onclick="location.href='{{ tag.get_delete_url }}'"
+                                    class="btn btn-danger">
+                                    Delete Tag</button>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <li class="list">There are currently no Tags available.</li>
+            {% endfor %}
         </div>
     </div>
-    {% for tag in tags %}
-        <div class="content-section">
-            <div class="row">
-                <div class="col-4">
-                    <h2>{{tag.tag|title}}</h2>
-                </div>
-                <div class="col-4" style="display: block;
-                                            margin-top: auto;
-                                            margin-bottom: auto">
-                <button name="update"
-                        type="button"
-                        onclick="location.href='{{ tag.get_update_url }}'"
-                        class="btn btn-success">
-                        Update Tag</button>
-                </div>
-                <div class="col-4" style="display: block;
-                                            margin-top: auto;
-                                            margin-bottom: auto">
-                    <button name="delete"
-                            type="submit"
-                            onclick="location.href='{{ tag.get_delete_url }}'"
-                            class="btn btn-danger">
-                            Delete Tag</button>
-                </div>
-            </div>
-        </div>
-    {% empty %}
-        <li class="list">There are currently no Tags available.</li>
-    {% endfor %}
 </div>
 {% endblock %}
