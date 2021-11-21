@@ -16,8 +16,6 @@ dotenv.load_dotenv(dotenv_file)
 
 SECRET_KEY = get_random_secret_key()
 
-DEBUG = True
-
 ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
@@ -106,12 +104,6 @@ USE_L10N = True
 USE_TZ = True
 
 
-STATIC_ROOT = BASE_DIR / "static"
-# STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / "staticfiles",
-]
-
 
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'staticfiles/media')
 # MEDIA_URL = '/staticfiles/media/'
@@ -131,4 +123,12 @@ AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
 AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
 STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
+
+if config("DEBUG"):
+    STATIC_ROOT = BASE_DIR / "static"
+    STATIC_URL = '/static/'
+    STATICFILES_DIRS = [
+        BASE_DIR / "staticfiles",
+    ]
+else:
+    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
