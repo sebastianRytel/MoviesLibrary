@@ -48,11 +48,6 @@ class Movies(models.Model):
         (0, mark_safe(f'<img src="{settings.STATIC_URL}rating_icos/rating_0_ico.jpg">')),
     )
 
-    WHERE_TO_WATCH = (
-        ('HARD DRIVE', mark_safe('<img src="/static/local_icos/hdd_ico.jpg">')),
-        ('CDA', mark_safe('<img src=/static/local_icos/cda_ico.jpg">')),
-        ('NETFLIX', mark_safe('<img src="/static/local_icos/flix_ico.jpg">'))
-    )
 
     Title = models.CharField(max_length=100)
     Year = models.IntegerField()
@@ -76,7 +71,7 @@ class Movies(models.Model):
     HboGO = models.CharField(max_length=300, blank=True, default='')
     AmazonPrime = models.CharField(max_length=300, blank=True, default='')
     HardDrive = models.CharField(max_length=300, blank=True, default='')
-    watched = models.BooleanField(default=True)
+    watched = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ("Title", "Year")
