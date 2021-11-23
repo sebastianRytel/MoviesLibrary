@@ -30,4 +30,3 @@ class MovieFilter(FilterSet):
     class Meta:
         model = Movies
         fields = ['Title', 'Rating', 'watched', 'movie_tag']
-        filter_vertical = 'watched'

@@ -104,7 +104,6 @@ USE_L10N = True
 USE_TZ = True
 
 
-
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'staticfiles/media')
 # MEDIA_URL = '/staticfiles/media/'
 
@@ -113,16 +112,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL = 'movies-library'
+LOGIN_REDIRECT_URL = 'movies-home'
 LOGIN_URL = 'login'
-
-
-AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
-AWS_REGION_NAME = config("AWS_REGION_NAME")
-AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
-AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
-
 
 DEBUG = config("DEBUG") == "TRUE"
 
@@ -134,5 +125,10 @@ if DEBUG:
     ]
 
 else:
+    AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
+    AWS_REGION_NAME = config("AWS_REGION_NAME")
+    AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
+    AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
     STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
     STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"

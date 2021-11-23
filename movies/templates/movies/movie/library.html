@@ -3,13 +3,16 @@
 {% load static %}
 {% block content %}
 <div class="row">
-    <div class="col-md-8">
-        {% for movie in filter.qs %}
+    <div class="col-md-8 library-elements-position">
+        {% if not object_list %}
+            <h1>Any movie in library doesn't meet search criteria</h1>
+        {% endif %}
+        {% for movie in object_list %}
             <article class="media content-section">
-            <div class="col-3 library-poster">
+            <div class="col-md-3 library-poster">
                 <img src={{ movie.Poster }}; width="100" height="auto">
             </div>
-            <div class="col-6">
+            <div class="col-md-6 library-elements-position">
                 <h2><a class="movie-title" href="{% url 'movie-detail' movie.slug %}">{{ movie.Title }}</a></h2>
                 <h4>{{ movie.Year }}</h4>
             {% if movie.watched is True %}
@@ -30,7 +33,7 @@
                 <h5 style="color:red">Movie has not been watched yet. Cannot be rated.</h5>
             {% endif %}
             </div>
-            <div class="col-4" style="justify-content: center">
+            <div class="col-md-3 library-elements-position">
                 {% if movie.watched is True %}
                     <img src="{% static "various/ok.jpg" %}">
                     <h4 style="color:green">Watched</h4>
@@ -51,6 +54,19 @@
             </div>
             </article>
         {% endfor %}
+        <div class="row row-center">
+            {% if is_paginated %}
+                {% if page_obj.has_previous %}
+                    <a class="btn btn-danger mb-4 ml-2" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                {% endif %}
+                {% for num in page_obj.paginator.page_range %}
+                    <a class="btn btn-danger mb-4 ml-2" href="?page={{ num }}">{{ num }}</a>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <a class="btn btn-danger mb-4 ml-2" href="?page={{ page_obj.next_page_number }}">Next</a>
+                {% endif %}
+            {% endif %}
+        </div>
     </div>
     <div class="col-md-4">
         <div class="media content-section">
@@ -59,6 +75,10 @@
             <button class="btn btn-danger" type="submit">Search</button>
             </form>
         </div>
+        <button class="btn btn-danger"
+                onclick="location.href='{% url "movies-library" %}'">
+                Reset Filters</button>
     </div>
+
 </div>
 {% endblock %}

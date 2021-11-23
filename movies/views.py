@@ -3,6 +3,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 
 from movies.services.create_data_for_db import create_data
 from movies.services.searcher import search_all, search_exact, search_by_id
@@ -11,9 +12,10 @@ from movies.db.form import MoviesForm, MovieTagForm
 from movies.db.models import Movies, MovieTag
 from movies.db.filters import MovieFilter
 
-
+@login_required()
 def home(request):
-    return render(request, 'movies/home.html')
+    posters = Movies.objects.only("Poster")
+    return render(request, 'movies/home.html', {'posters': posters})
 
 @login_required
 def search(request):
@@ -69,12 +71,16 @@ class LibraryView(LoginRequiredMixin, ListView):
     template_name = 'movies/movie/library.html'
     context_object_name = 'movies'
     ordering = ['Title', 'Year']
+    paginate_by = 5
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['filter'] = MovieFilter(self.request.GET, queryset=self.get_queryset())
         return context
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return MovieFilter(self.request.GET, queryset=queryset).qs
 
 class MovieDetailView(LoginRequiredMixin, DetailView):
     model = Movies
@@ -90,7 +96,6 @@ class MovieDetailView(LoginRequiredMixin, DetailView):
             'HardDrive': self.object.HardDrive,
         }
         return context
-
 
 
 class MovieUpdate(LoginRequiredMixin, UpdateView):
@@ -118,7 +123,6 @@ class TagList(LoginRequiredMixin, ListView):
     context_object_name = 'tags'
     ordering = ['tag']
     template_name = 'movies/tag/tags_list.html'
-
 
 class TagUpdate(LoginRequiredMixin, UpdateView):
     form_class = MovieTagForm

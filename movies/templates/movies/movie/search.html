@@ -4,23 +4,31 @@
     <div class="row row-center">
         <div class="col-md-8">
             <div class="content-section">
-                <form method="POST">
-                {% csrf_token %}
-                    <label>
-                        <input class="search" type="text" name="search_all" placeholder="Search all Titles">
-                    </label>
-                    <input class='btn btn-danger' type="submit" value="Search">
-                    <br>
-                    <label>
-                        <input class="search" type="text" name="search_exact" placeholder="Search exact Title">
-                    </label>
-                    <input class='btn btn-danger' type="submit" value="Search">
-                    <br>
-                    <label>
-                        <input class="search" type="text" name="search_by_id" placeholder="Search by ImdbID">
-                    </label>
-                    <input class='btn btn-danger' type="submit" value="Search">
-                </form>
+                <div class="row">
+                <div class="col-6">
+                    <form method="POST">
+                    {% csrf_token %}
+                        <label>
+                            <input class="search" type="text" name="search_all" placeholder="Search all Titles">
+                        </label>
+                        <input class='btn btn-danger' type="submit" value="Search">
+                        <br>
+                        <label>
+                            <input class="search" type="text" name="search_exact" placeholder="Search exact Title">
+                        </label>
+                        <input class='btn btn-danger' type="submit" value="Search">
+                        <br>
+                        <label>
+                            <input class="search" type="text" name="search_by_id" placeholder="Search by ImdbID">
+                        </label>
+                        <input class='btn btn-danger' type="submit" value="Search">
+                    </form>
+                </div>
+                <div class="col-6">
+                    <h5>If you are not sure about the title, use IMDB site for checking title</h5>
+                    <a href="https://www.imdb.com/">IMDB LINK</a>
+                </div>
+                </div>
             </div>
             {% if movies %}
                 {% if movies.Response == 'False' %}
