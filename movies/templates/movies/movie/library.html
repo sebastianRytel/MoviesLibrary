@@ -1,6 +1,7 @@
 {% extends 'movies/base.html' %}
 {% load crispy_forms_tags %}
 {% load static %}
+
 {% block content %}
 <div class="row">
     <div class="col-md-8 library-elements-position">
@@ -57,13 +58,38 @@
         <div class="row row-center">
             {% if is_paginated %}
                 {% if page_obj.has_previous %}
-                    <a class="btn btn-danger mb-4 ml-2" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    {% if filter_string %}
+                        <a class="btn btn-danger mb-4 ml-2"
+                        href="?{{ filter_string }}page={{ page_obj.previous_page_number }}">
+                        Previous</a>
+                    {% else %}
+                        <a class="btn btn-danger mb-4 ml-2"
+                           href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    {% endif %}
                 {% endif %}
                 {% for num in page_obj.paginator.page_range %}
-                    <a class="btn btn-danger mb-4 ml-2" href="?page={{ num }}">{{ num }}</a>
+                    {% if num == page_obj.number %}
+                        {% if filter_string %}
+                            <a class="btn btn-success mb-4 ml-2" href="?{{ filter_string }}page={{ num }}">{{ num }}</a>
+                        {% else %}
+                            <a class="btn btn-success mb-4 ml-2" href="?page={{ num }}">{{ num }}</a>
+                        {% endif %}
+                    {% else %}
+                        {% if filter_string %}
+                            <a class="btn btn-danger mb-4 ml-2" href="?{{ filter_string }}page={{ num }}">{{ num }}</a>
+                        {% else %}
+                            <a class="btn btn-danger mb-4 ml-2" href="?page={{ num }}">{{ num }}</a>
+                        {% endif %}
+                    {% endif %}
                 {% endfor %}
                 {% if page_obj.has_next %}
-                    <a class="btn btn-danger mb-4 ml-2" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    {% if filter_string %}
+                        <a class="btn btn-danger mb-4 ml-2"
+                           href="?{{ filter_string }}page={{ page_obj.next_page_number }}">Next</a>
+                    {% else %}
+                        <a class="btn btn-danger mb-4 ml-2"
+                           href="?page={{ page_obj.next_page_number }}">Next</a>
+                    {% endif %}
                 {% endif %}
             {% endif %}
         </div>

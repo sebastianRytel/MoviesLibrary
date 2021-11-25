@@ -3,7 +3,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
 
 from movies.services.create_data_for_db import create_data
 from movies.services.searcher import search_all, search_exact, search_by_id
@@ -12,10 +11,12 @@ from movies.db.form import MoviesForm, MovieTagForm
 from movies.db.models import Movies, MovieTag
 from movies.db.filters import MovieFilter
 
+
 @login_required()
 def home(request):
     posters = Movies.objects.only("Poster")
     return render(request, 'movies/home.html', {'posters': posters})
+
 
 @login_required
 def search(request):
@@ -30,6 +31,7 @@ def search(request):
         elif movie_id:
             return render(request, 'movies/movie/search.html', {'movies': [search_by_id(movie_id)]})
     return render(request, 'movies/movie/search.html')
+
 
 @login_required
 def save_to_library(request):
@@ -48,10 +50,6 @@ class MovieCreateEmpty(LoginRequiredMixin, CreateView):
     form_class = MoviesForm
     model = Movies
     template_name = 'movies/forms/form_empty.html'
-
-    def get(self, *args, **kwargs):
-        resp = super().get(*args, **kwargs)
-        return resp
 
 
 class MovieCreate(LoginRequiredMixin, CreateView):
@@ -76,11 +74,18 @@ class LibraryView(LoginRequiredMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['filter'] = MovieFilter(self.request.GET, queryset=self.get_queryset())
+        get_copy = self.request.GET.copy()
+        filter_string = ''
+        for key, value in get_copy.items():
+            if key != 'page':
+                filter_string += f'{key}={value}&'
+        context['filter_string'] = filter_string
         return context
 
     def get_queryset(self):
         queryset = super().get_queryset()
         return MovieFilter(self.request.GET, queryset=queryset).qs
+
 
 class MovieDetailView(LoginRequiredMixin, DetailView):
     model = Movies
@@ -123,6 +128,8 @@ class TagList(LoginRequiredMixin, ListView):
     context_object_name = 'tags'
     ordering = ['tag']
     template_name = 'movies/tag/tags_list.html'
+    paginate_by = 10
+
 
 class TagUpdate(LoginRequiredMixin, UpdateView):
     form_class = MovieTagForm

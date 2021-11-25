@@ -29,4 +29,6 @@ class MovieFilter(FilterSet):
 
     class Meta:
         model = Movies
-        fields = ['Title', 'Rating', 'watched', 'movie_tag']
+        fields = {
+            'Title': ['icontains'],
+        }
