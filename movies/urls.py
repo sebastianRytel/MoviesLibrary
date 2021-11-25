@@ -11,10 +11,11 @@ from movies.views import (LibraryView,
                           TagUpdate,
                           TagList,
                           TagDelete,
+                          HomeView,
                           )
 
 urlpatterns = [
-    path('', views.home, name='movies-home'),
+    path('', HomeView.as_view(), name='movies-home'),
     path('search/', views.search, name='movies-search'),
     path('form_predefined/', MovieCreate.as_view(), name='movies-form'),
     path('form_empty/', MovieCreateEmpty.as_view(), name='movie-form-empty'),

@@ -12,11 +12,14 @@ from movies.db.models import Movies, MovieTag
 from movies.db.filters import MovieFilter
 
 
-@login_required()
-def home(request):
-    posters = Movies.objects.only("Poster")
-    return render(request, 'movies/home.html', {'posters': posters})
+class HomeView(LoginRequiredMixin, ListView):
+    model = Movies
+    template_name = 'movies/home.html'
+    context_object_name = 'posters'
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.only("Poster")
 
 @login_required
 def search(request):
