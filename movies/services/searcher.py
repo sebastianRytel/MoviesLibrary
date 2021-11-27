@@ -1,12 +1,20 @@
 import ast
-
+import os
 import requests
+import dotenv
 
-url = "https://movie-database-imdb-alternative.p.rapidapi.com/"
+from decouple import config
+from django.conf import settings
+
+dotenv_file = os.path.join(settings.BASE_DIR, ".env")
+dotenv.load_dotenv(dotenv_file)
+
+url = config('API_URL')
+
 
 headers = {
-    'x-rapidapi-host': "movie-database-imdb-alternative.p.rapidapi.com",
-    'x-rapidapi-key': "b5d9716ba4msh6da311e3a53c32bp1ed818jsn7a57ebf9abc6"
+    'x-rapidapi-host': config('x-rapidapi-host'),
+    'x-rapidapi-key': config('x-rapidapi-key')
 }
 
 
