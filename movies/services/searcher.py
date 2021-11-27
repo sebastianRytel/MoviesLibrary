@@ -9,12 +9,11 @@ from django.conf import settings
 dotenv_file = os.path.join(settings.BASE_DIR, ".env")
 dotenv.load_dotenv(dotenv_file)
 
-url = config('API_URL')
-
+url = config("API_URL")
 
 headers = {
-    'x-rapidapi-host': config('x-rapidapi-host'),
-    'x-rapidapi-key': config('x-rapidapi-key')
+    'x-rapidapi-host': config("API_HOST"),
+    'x-rapidapi-key': config("API_KEY")
 }
 
 
