@@ -72,7 +72,7 @@ class LibraryView(LoginRequiredMixin, ListView):
     template_name = 'movies/movie/library.html'
     context_object_name = 'movies'
     ordering = ['Title', 'Year']
-    paginate_by = 5
+    paginate_by = 10
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
