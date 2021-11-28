@@ -117,18 +117,19 @@ LOGIN_URL = 'login'
 
 DEBUG = config("DEBUG") == "TRUE"
 
-# if DEBUG:
-STATIC_ROOT = BASE_DIR / "staticfiles"
-STATIC_URL = "/static/"
-STATICFILES_DIRS = [
-  BASE_DIR / "static"
-]
+if DEBUG:
 
-# else:
-#     AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
-#     AWS_REGION_NAME = config("AWS_REGION_NAME")
-#     AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
-#     AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
-#     AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
-#     STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
-#     STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    STATIC_ROOT = BASE_DIR / "staticfiles"
+    STATIC_URL = "/static/"
+    STATICFILES_DIRS = [
+      BASE_DIR / "static"
+    ]
+
+else:
+    AWS_STORAGE_BUCKET_NAME = config("AWS_STORAGE_BUCKET_NAME")
+    AWS_REGION_NAME = config("AWS_REGION_NAME")
+    AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
+    AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
+    AWS_S3_CUSTOM_DOMAIN = f"{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com"
+    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
+    STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
