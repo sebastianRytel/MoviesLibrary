@@ -9,8 +9,7 @@
 <details>
     <summary>Click here to see general information about application!</summary>
         <br>
-        Movies Library is an web app which allows user to store information about his favourite movies. Search features uses IMBD API for looking information about the movie. 
-        The amount of data pulled from IMBD is limited by the API. The API itself is free and is taken from RapidApi hub.
+        Movies Library is an web app which allows user to store information about his favourite movies. Search features uses IMBD API (movie data base - >https://www.imdb.com/) for looking information about the movie. The amount of data pulled from IMBD is limited by the API. The API itself is free and is taken from RapidApi hub.
         </br>
         App allows user to perform following actions:
         <ul>
