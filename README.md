@@ -3,6 +3,7 @@
 # Table of contents
 * [General info](#general-info)
 * [Technologies](#technologies)
+* [Printscreens](#printscreens)
 
 ## General info
 
@@ -49,4 +50,28 @@
           <li>AWS S3</li>
           <li>AWS RDS</li>
         </ul>
+</details>
+
+## PrintScreens
+
+<details>
+<summary>Click here to see general information about application!</summary>
+
+Welcome Page
+![first](https://user-images.githubusercontent.com/64482501/152364550-883da4fc-e477-4c7f-890c-4864ef26cd36.jpg)
+    
+Page with search engines and example of search result
+![first_a](https://user-images.githubusercontent.com/64482501/152365493-d5ad59bf-c6be-445e-be3a-17df5c2e1a31.jpg)
+
+Page with information about movie after clicking Edit movie details
+![image](https://user-images.githubusercontent.com/64482501/152365671-14a49cbb-0e82-4731-acca-d8d55922479c.png)
+
+
+Page with form for filling information about the movie.
+![second](https://user-images.githubusercontent.com/64482501/152364662-3d9077d8-17fb-47e6-97f3-7b9325f858f8.jpg)
+
+
+Example of plotted graph.
+
+
 </details>
