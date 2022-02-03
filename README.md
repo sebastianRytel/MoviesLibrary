@@ -58,20 +58,22 @@
 <summary>Click here to see general information about application!</summary>
 
 Welcome Page
-![first](https://user-images.githubusercontent.com/64482501/152364550-883da4fc-e477-4c7f-890c-4864ef26cd36.jpg)
+![first](https://user-images.githubusercontent.com/64482501/152367907-a7540b25-104e-4a41-940c-22bd9e39d078.jpg)
+
     
 Page with search engines and example of search result
-![first_a](https://user-images.githubusercontent.com/64482501/152365493-d5ad59bf-c6be-445e-be3a-17df5c2e1a31.jpg)
+![first_a](https://user-images.githubusercontent.com/64482501/152367988-37d31ed8-ee71-4c1c-b6df-467e84259e35.jpg)
+
 
 Page with information about movie after clicking Edit movie details
-![image](https://user-images.githubusercontent.com/64482501/152365671-14a49cbb-0e82-4731-acca-d8d55922479c.png)
+![second](https://user-images.githubusercontent.com/64482501/152368121-60a803ba-75fd-4a24-a614-88aa07f05a03.jpg)
 
 
-Page with form for filling information about the movie.
-![second](https://user-images.githubusercontent.com/64482501/152364662-3d9077d8-17fb-47e6-97f3-7b9325f858f8.jpg)
+Page with movies stored in Data Base, together with search and filter options.
+![third](https://user-images.githubusercontent.com/64482501/152368535-b7a88fcf-1e2f-4e65-adae-c570c2fd3dc1.jpg)
 
 
-Example of plotted graph.
-
+Page with movie tags
+![fifth](https://user-images.githubusercontent.com/64482501/152368657-c7a9d6fd-eb78-4476-8531-3d5029f39592.jpg)
 
 </details>
