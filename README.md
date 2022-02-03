@@ -58,22 +58,23 @@
 <summary>Click here to see general information about application!</summary>
 
 Welcome Page
+    
 ![first](https://user-images.githubusercontent.com/64482501/152367907-a7540b25-104e-4a41-940c-22bd9e39d078.jpg)
-
     
 Page with search engines and example of search result
+    
 ![first_a](https://user-images.githubusercontent.com/64482501/152367988-37d31ed8-ee71-4c1c-b6df-467e84259e35.jpg)
 
-
 Page with information about movie after clicking Edit movie details
+    
 ![second](https://user-images.githubusercontent.com/64482501/152368121-60a803ba-75fd-4a24-a614-88aa07f05a03.jpg)
 
-
-Page with movies stored in Data Base, together with search and filter options.
+Page with movies stored in Data Base, together with search and filter options
+    
 ![third](https://user-images.githubusercontent.com/64482501/152368535-b7a88fcf-1e2f-4e65-adae-c570c2fd3dc1.jpg)
 
-
 Page with movie tags
+    
 ![fifth](https://user-images.githubusercontent.com/64482501/152368657-c7a9d6fd-eb78-4476-8531-3d5029f39592.jpg)
 
 </details>
