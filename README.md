@@ -67,7 +67,7 @@ Page with search engines and example of search result
 
 Page with information about movie after clicking Edit movie details
     
-![second](https://user-images.githubusercontent.com/64482501/152368121-60a803ba-75fd-4a24-a614-88aa07f05a03.jpg)
+![second](https://user-images.githubusercontent.com/64482501/152370531-17e57925-9f02-49b4-929c-92c5b93a2a47.jpg)
 
 Page with movies stored in Data Base, together with search and filter options
     
